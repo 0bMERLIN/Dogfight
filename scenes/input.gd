@@ -6,6 +6,7 @@ extends MultiplayerSynchronizer
 @export var speed := 10.0
 @export var firering := false
 @export var missile := false
+@export var Target : String
 
 func _ready():
 	#Disable for non local player instances

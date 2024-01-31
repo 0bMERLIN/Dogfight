@@ -35,6 +35,7 @@ func add_player(id: int):
 	character.position = Vector3(pos.x * RANDOM_SPAWN_RADIUS * randf(), 0, pos.y * RANDOM_SPAWN_RADIUS * randf())
 	character.name = str(id)
 	character.BulletsCollection = $Bullets
+	character.PlayerCollection = $Players
 	$Players.add_child(character, true)
 
 func del_player(id: int):
