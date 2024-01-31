@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://c8koycu85ebae"]
+
+[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_7nxc5"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
+[ext_resource type="Script" path="res://scenes/input.gd" id="3_a2r12"]
+[ext_resource type="Script" path="res://scenes/camera.gd" id="3_ls23w"]
+[ext_resource type="PackedScene" uid="uid://ctcbhkbbq83qf" path="res://scenes/missile.tscn" id="3_oar0t"]
+[ext_resource type="PackedScene" uid="uid://ovmwcyo8xlke" path="res://scenes/bullet.tscn" id="5_5kv62"]
+[ext_resource type="Texture2D" uid="uid://dnk41lrppqiy7" path="res://assets/target_overlay.png" id="6_bnhhy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6kyf5"]
+height = 3.7
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ulg38"]
+properties/0/path = NodePath("../Input:rotation_speeds")
+properties/0/spawn = false
+properties/0/replication_mode = 1
+properties/1/path = NodePath("../Input:speed")
+properties/1/spawn = false
+properties/1/replication_mode = 1
+properties/2/path = NodePath("../Input:firering")
+properties/2/spawn = false
+properties/2/replication_mode = 1
+properties/3/path = NodePath("../Input:missile")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("../Input:Target")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cg8ge"]
+properties/0/path = NodePath(".:player")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.715279, 0)
+script = ExtResource("1_ukpfr")
+Bullet = ExtResource("5_5kv62")
+Missile = ExtResource("3_oar0t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.833422, 0.39799)
+shape = SubResource("CapsuleShape3D_6kyf5")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_7nxc5")]
+
+[node name="Input" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../Sync")
+replication_config = SubResource("SceneReplicationConfig_ulg38")
+script = ExtResource("3_a2r12")
+
+[node name="Sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_cg8ge")
+
+[node name="CamRoot" type="Node3D" parent="."]
+
+[node name="Camera" type="Camera3D" parent="CamRoot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.40446, -7)
+script = ExtResource("3_ls23w")
+
+[node name="BulletMuzzle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.723139, 2.76856)
+
+[node name="Hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Hud"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_bnhhy")

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://ovmwcyo8xlke"]
+
+[ext_resource type="Script" path="res://scenes/bullet.gd" id="1_eegq7"]
+[ext_resource type="Shader" path="res://scenes/bullet.gdshader" id="2_u022i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k7x0q"]
+render_priority = 0
+shader = ExtResource("2_u022i")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_gbylx"]
+material = SubResource("ShaderMaterial_k7x0q")
+radius = 0.1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hte8v"]
+radius = 0.1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5cgdd"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Bullet" type="Area3D"]
+script = ExtResource("1_eegq7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_gbylx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_hte8v")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="MultiplayerSync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_5cgdd")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

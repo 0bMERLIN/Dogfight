@@ -31,7 +31,7 @@ func _on_host_pressed():
 
 
 func _on_connect_pressed():
-	# Start the client.
+	#Start the client
 	var txt : String = $UI/Menu/Ip.text
 	if txt == "":
 		OS.alert("Need a remote to connect to.")
@@ -49,11 +49,24 @@ func _on_connect_pressed():
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	
 	start_game()
-
+	
+func change_world(scene: PackedScene):
+	#Get the world node
+	var world = $World
+	
+	#Delete previous world elements
+	for child in world.get_children():
+		world.remove_child(child)
+		child.queue_free()
+		
+	#Load new world
+	world.add_child(scene.instantiate())
 
 func start_game():
 	$UI.hide()
 	get_tree().paused = false
+	if multiplayer.is_server():
+		change_world.call_deferred(load("res://scenes/world.tscn"))
 
 func _on_peer_connected(id):
 	print("Peer connected. Id: ", id)

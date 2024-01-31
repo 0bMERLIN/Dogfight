@@ -1,64 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcvnr7fsqmao7"]
+[gd_scene load_steps=2 format=3 uid="uid://dcvnr7fsqmao7"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_r6yre"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ssomo"]
-size = Vector3(10, 0.1, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_630w1"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqcma"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="SphereMesh" id="SphereMesh_mb4wl"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_0ibeq"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_l3dgt"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:linear_velocity")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [node name="Game" type="Node"]
 script = ExtResource("1_r6yre")
 
-[node name="World" type="Node3D" parent="."]
+[node name="World" type="Node" parent="."]
 
-[node name="Floor" type="StaticBody3D" parent="World"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Floor"]
-shape = SubResource("BoxShape3D_ssomo")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Floor"]
-transform = Transform3D(10, 0, 0, 0, 0.1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("BoxMesh_630w1")
-skeleton = NodePath("../..")
-
-[node name="Objects" type="Node3D" parent="World"]
-
-[node name="Sphere" type="RigidBody3D" parent="World/Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38575, 0)
-physics_material_override = SubResource("PhysicsMaterial_gqcma")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/Sphere"]
-mesh = SubResource("SphereMesh_mb4wl")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/Sphere"]
-shape = SubResource("SphereShape3D_0ibeq")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="World/Objects/Sphere"]
-replication_interval = 1.013
-replication_config = SubResource("SceneReplicationConfig_l3dgt")
-
-[node name="Camera3D" type="Camera3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2634, 6.45265)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.8731, 0)
+[node name="WorldSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/world.tscn")
+spawn_path = NodePath("../World")
+spawn_limit = 1
 
 [node name="UI" type="Control" parent="."]
 process_mode = 3

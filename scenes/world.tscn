@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://blje2bayyx8x2"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_1pi3t"]
+[ext_resource type="Texture2D" uid="uid://cjfncepf3diik" path="res://assets/skybox.jpeg" id="2_bmhps"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ssomo"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_630w1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqcma"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_mb4wl"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0ibeq"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_l3dgt"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:linear_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_s11q0"]
+panorama = ExtResource("2_bmhps")
+
+[sub_resource type="Sky" id="Sky_mlaso"]
+sky_material = SubResource("PanoramaSkyMaterial_s11q0")
+radiance_size = 6
+
+[sub_resource type="Environment" id="Environment_8dm5x"]
+background_mode = 2
+sky = SubResource("Sky_mlaso")
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_1pi3t")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_ssomo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(10, 0, 0, 0, 0.1, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_630w1")
+skeleton = NodePath("../..")
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Sphere" type="RigidBody3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38575, 0)
+physics_material_override = SubResource("PhysicsMaterial_gqcma")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Sphere"]
+mesh = SubResource("SphereMesh_mb4wl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Sphere"]
+shape = SubResource("SphereShape3D_0ibeq")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Objects/Sphere"]
+replication_interval = 1.013
+replication_config = SubResource("SceneReplicationConfig_l3dgt")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.8731, 0)
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 4
+
+[node name="Players" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8dm5x")
+
+[node name="Bullets" type="Node" parent="."]
+
+[node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/bullet.tscn", "res://scenes/missile.tscn")
+spawn_path = NodePath("../Bullets")

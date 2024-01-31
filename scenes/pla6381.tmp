@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://bcqkpywo33hve"]
+
+[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_7nxc5"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
+[ext_resource type="Script" path="res://scenes/input.gd" id="3_a2r12"]
+[ext_resource type="Script" path="res://scenes/camera.gd" id="3_ls23w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6kyf5"]
+height = 3.7
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ulg38"]
+properties/0/path = NodePath("../Input:rotation_speeds")
+properties/0/spawn = false
+properties/0/replication_mode = 1
+properties/1/path = NodePath("../Input:speed")
+properties/1/spawn = false
+properties/1/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cg8ge"]
+properties/0/path = NodePath(".:player")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.715279, 0)
+script = ExtResource("1_ukpfr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.833422, 0.39799)
+shape = SubResource("CapsuleShape3D_6kyf5")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_7nxc5")]
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.40446, -7)
+script = ExtResource("3_ls23w")
+
+[node name="Input" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../Sync")
+replication_config = SubResource("SceneReplicationConfig_ulg38")
+script = ExtResource("3_a2r12")
+
+[node name="Sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_cg8ge")
