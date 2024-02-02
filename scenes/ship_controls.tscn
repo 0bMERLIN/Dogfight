@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ped4jqinp4y2"]
+
+[ext_resource type="Texture2D" uid="uid://du3ch0o1xt3uv" path="res://assets/Navball.webp" id="1_7gg7r"]
+[ext_resource type="Script" path="res://scenes/ship_controls.gd" id="1_jjyi7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lm10n"]
+shading_mode = 0
+albedo_texture = ExtResource("1_7gg7r")
+
+[sub_resource type="SphereMesh" id="SphereMesh_3csn5"]
+material = SubResource("StandardMaterial3D_lm10n")
+
+[node name="ShipControls" type="Node3D"]
+script = ExtResource("1_jjyi7")
+
+[node name="Navball" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Navball"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.010474)
+mesh = SubResource("SphereMesh_3csn5")
+skeleton = NodePath("../..")
+
+[node name="CamRoot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CamRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.8211)

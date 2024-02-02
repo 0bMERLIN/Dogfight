@@ -66,6 +66,5 @@ func shoot():
 func missile():
 	var m = Missile.instantiate()
 	m.target = PlayerCollection.get_node($Input.Target)
-	print(m.target)
 	BulletsCollection.add_child(m, true)
 	m.transform = $BulletMuzzle.global_transform

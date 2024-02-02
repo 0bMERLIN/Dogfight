@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ctcbhkbbq83qf"]
 
 [ext_resource type="PackedScene" uid="uid://bw0jnktijkcwg" path="res://assets/aim-9_missile.glb" id="1_k4h20"]
-[ext_resource type="Script" path="res://scenes/missile.gd" id="1_m3pf0"]
+[ext_resource type="Script" path="res://scenes/missile.gd" id="1_p5rx0"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hurci"]
 radius = 0.2
@@ -15,7 +15,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="Missile" type="Area3D"]
-script = ExtResource("1_m3pf0")
+script = ExtResource("1_p5rx0")
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("1_k4h20")]
 

@@ -1,14 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://ovmwcyo8xlke"]
+[gd_scene load_steps=6 format=3 uid="uid://ovmwcyo8xlke"]
 
 [ext_resource type="Script" path="res://scenes/bullet.gd" id="1_eegq7"]
-[ext_resource type="Shader" path="res://scenes/bullet.gdshader" id="2_u022i"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k7x0q"]
-render_priority = 0
-shader = ExtResource("2_u022i")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uuc8o"]
+albedo_color = Color(0.992157, 0.494118, 0.352941, 1)
+emission_enabled = true
+emission = Color(1, 0.435294, 0.34902, 1)
+emission_energy_multiplier = 1.4
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gbylx"]
-material = SubResource("ShaderMaterial_k7x0q")
+material = SubResource("StandardMaterial3D_uuc8o")
 radius = 0.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hte8v"]

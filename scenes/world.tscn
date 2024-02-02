@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://blje2bayyx8x2"]
+[gd_scene load_steps=13 format=3 uid="uid://blje2bayyx8x2"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_1pi3t"]
 [ext_resource type="Texture2D" uid="uid://cjfncepf3diik" path="res://assets/skybox.jpeg" id="2_bmhps"]
@@ -12,7 +12,12 @@ size = Vector3(10, 0.1, 10)
 friction = 0.0
 bounce = 1.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1gu7i"]
+
 [sub_resource type="SphereMesh" id="SphereMesh_mb4wl"]
+material = SubResource("StandardMaterial3D_1gu7i")
+radius = 500.0
+height = 1000.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0ibeq"]
 
@@ -50,17 +55,19 @@ skeleton = NodePath("../..")
 
 [node name="Objects" type="Node3D" parent="."]
 
-[node name="Sphere" type="RigidBody3D" parent="Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38575, 0)
+[node name="Sun" type="RigidBody3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0)
+mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_gqcma")
+gravity_scale = 9.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Sphere"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Sun"]
 mesh = SubResource("SphereMesh_mb4wl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Sphere"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Sun"]
 shape = SubResource("SphereShape3D_0ibeq")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Objects/Sphere"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Objects/Sun"]
 replication_interval = 1.013
 replication_config = SubResource("SceneReplicationConfig_l3dgt")
 
