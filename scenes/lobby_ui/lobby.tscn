@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdoix5k4q61vb"]
+
+[ext_resource type="Script" path="res://scenes/lobby_ui/lobby.gd" id="1_qu657"]
+[ext_resource type="PackedScene" uid="uid://cm1mul2qnc3jk" path="res://scenes/lobby_ui/teamlist.tscn" id="2_lspsj"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qu657")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 596.0
+offset_right = 161.0
+offset_bottom = 636.0
+alignment = 1
+
+[node name="ReadyButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "Bereit"
+
+[node name="StartButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "Starten"
+
+[node name="Teams" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 587.0
+
+[node name="TeamList" parent="Teams" instance=ExtResource("2_lspsj")]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/StartButton" to="." method="_on_button_pressed"]

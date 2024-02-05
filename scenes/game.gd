@@ -68,7 +68,7 @@ func start_lobby():
 	$UI.hide()
 	get_tree().paused = false
 	if multiplayer.is_server():
-		change_world.call_deferred(load("res://scenes/lobby.tscn"))
+		change_world.call_deferred(load("res://scenes/lobby_ui/lobby.tscn"))
 
 func _on_peer_connected(id):
 	print("Peer connected. Id: ", id)
