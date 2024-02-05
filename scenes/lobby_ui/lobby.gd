@@ -29,9 +29,13 @@ func add_player(id: int):
 	$Teams/TeamList.add_player(character)
 
 func del_player(id: int):
-	if not $Players.has_node(str(id)):
+	$Teams/TeamList.delete_player(id)
+
+func _exit_tree():
+	if not multiplayer.is_server():
 		return
-	$Players.get_node(str(id)).queue_free()
+	multiplayer.peer_connected.disconnect(add_player)
+	multiplayer.peer_disconnected.disconnect(del_player)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

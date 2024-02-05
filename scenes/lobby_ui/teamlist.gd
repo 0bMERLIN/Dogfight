@@ -12,3 +12,8 @@ func _process(delta):
 
 func add_player(player_name):
 	$Texture/PlayerList.add_child(player_name, true)
+
+func delete_player(player_id):
+	if not $Texture/PlayerList.has_node(str(player_id)):
+		return
+	$Texture/PlayerList.get_node(str(player_id)).queue_free()
