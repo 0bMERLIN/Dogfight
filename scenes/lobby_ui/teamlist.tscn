@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cm1mul2qnc3jk"]
 
-[ext_resource type="PackedScene" uid="uid://cn5o0mvy2bctl" path="res://scenes/lobby_ui/player_name.tscn" id="1_7dpy8"]
+[ext_resource type="Script" path="res://scenes/lobby_ui/teamlist.gd" id="1_mnr7k"]
 
 [node name="TeamList" type="Control"]
 layout_mode = 3
@@ -9,21 +9,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_mnr7k")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="Texture" type="NinePatchRect" parent="."]
 layout_mode = 2
 offset_right = 40.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect"]
+[node name="PlayerList" type="VBoxContainer" parent="Texture"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 98.0
 
-[node name="PlayerName" parent="NinePatchRect/VBoxContainer" instance=ExtResource("1_7dpy8")]
-layout_mode = 2
-
-[node name="PlayerName2" parent="NinePatchRect/VBoxContainer" instance=ExtResource("1_7dpy8")]
-layout_mode = 2
-
-[node name="PlayerName3" parent="NinePatchRect/VBoxContainer" instance=ExtResource("1_7dpy8")]
-layout_mode = 2
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/lobby_ui/player_name.tscn")
+spawn_path = NodePath("../Texture/PlayerList")
