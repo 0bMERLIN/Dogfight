@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var rootNode : Node
+
 const RANDOM_SPAWN_RADIUS := 5.0
 
 func _ready():
