@@ -4,8 +4,6 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if not multiplayer.is_server():
-		$StartButtons/StartButton.disabled = true
 	
 	#Only spawn players as the server
 	if not multiplayer.is_server():
@@ -24,7 +22,7 @@ func _ready():
 
 func add_player(id: int):
 	var character = preload("res://scenes/lobby_ui/player_name.tscn").instantiate()
-	#Set the players id
+	#Set the players idD
 	character.player_name = str(id)
 	$Teams/TeamList.add_player(character)
 
@@ -39,9 +37,12 @@ func _exit_tree():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	$StartButtons/StartButton.disabled = not multiplayer.is_server() || not $Teams/TeamList.all_players_ready()
 
 
-func _on_button_pressed():
+func _on_start_button_pressed():
 	rootNode.change_world.call_deferred(load("res://scenes/world.tscn"))
-	
+
+
+func _on_ready_button_pressed():
+	$Teams/TeamList.player_ready.rpc(multiplayer.get_unique_id())

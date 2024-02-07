@@ -42,4 +42,5 @@ layout_mode = 2
 _spawnable_scenes = PackedStringArray("res://scenes/lobby_ui/teamlist.tscn")
 spawn_path = NodePath("../Teams")
 
-[connection signal="pressed" from="StartButtons/StartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="StartButtons/ReadyButton" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="StartButtons/StartButton" to="." method="_on_start_button_pressed"]
