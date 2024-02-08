@@ -11,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qu657")
+start_time_s = 1
 
 [node name="StartButtons" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -20,15 +21,13 @@ offset_right = 161.0
 offset_bottom = 636.0
 alignment = 1
 
-[node name="ReadyButton" type="Button" parent="StartButtons"]
+[node name="ReadyButton" type="CheckButton" parent="StartButtons"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "Bereit"
 
-[node name="StartButton" type="Button" parent="StartButtons"]
-custom_minimum_size = Vector2(180, 0)
+[node name="StartCountdown" type="Label" parent="StartButtons"]
 layout_mode = 2
-text = "Starten"
 
 [node name="Teams" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -43,4 +42,4 @@ _spawnable_scenes = PackedStringArray("res://scenes/lobby_ui/teamlist.tscn")
 spawn_path = NodePath("../Teams")
 
 [connection signal="pressed" from="StartButtons/ReadyButton" to="." method="_on_ready_button_pressed"]
-[connection signal="pressed" from="StartButtons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="toggled" from="StartButtons/ReadyButton" to="." method="_on_ready_button_toggled"]

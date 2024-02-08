@@ -10,11 +10,11 @@ func delete_player(player_id):
 	$Texture/PlayerList.get_node(str(player_id)).queue_free()
 
 @rpc("any_peer", "call_local", "reliable")
-func player_ready(player_id):
+func set_ready(player_id, ready: bool):
 	if not $Texture/PlayerList.has_node(str(player_id)):
 		return
 	var p = $Texture/PlayerList.get_node(str(player_id))
-	p.player_ready()
+	p.is_ready = ready
 
 func all_players_ready() -> bool:
 	return $Texture/PlayerList.get_children().all(func(x): return x.is_ready)

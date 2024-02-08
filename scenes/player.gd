@@ -24,6 +24,8 @@ func _ready():
 	# Set the camera as current if we are this player.
 	if player == multiplayer.get_unique_id():
 		$CamRoot/Camera.current = true
+	else:
+		$Hud/SubViewportContainer.hide()
 	$CamRoot/Camera.input = input
 	# Only process on server.
 	# EDIT: Let the client simulate player movement too to compesate network input latency.

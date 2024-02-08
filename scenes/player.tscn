@@ -96,9 +96,9 @@ render_target_update_mode = 4
 [node name="ShipControls" parent="Hud/SubViewportContainer/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("7_tcrqv")]
 player = NodePath("../../../..")
 
-[node name="NavballRotationIndicator" type="Sprite2D" parent="Hud" node_paths=PackedStringArray("player")]
-position = Vector2(599, 578)
+[node name="NavballRotationIndicator" type="Sprite2D" parent="Hud/SubViewportContainer" node_paths=PackedStringArray("player")]
+position = Vector2(255, 256)
 scale = Vector2(0.0828595, 0.0828595)
 texture = ExtResource("8_fxt0k")
 script = ExtResource("9_221bg")
-player = NodePath("../..")
+player = NodePath("../../..")

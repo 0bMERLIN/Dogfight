@@ -6,8 +6,6 @@ signal game_started
 @onready var setting_screen=$Setting_screen
 @onready var before_game_screen=$before_game_screen
 
-
-
 func _ready():
 	pass
 	
@@ -19,7 +17,7 @@ func _on_restart_button_pressed():
 
 
 func _on_play_button_pressed():
-	game_started.emit()
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 

@@ -1,8 +1,9 @@
 extends Control
 
 @export var rootNode : Node
+@export var start_time_s : int
+var start_timer : float = start_time_s
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	
 	#Only spawn players as the server
@@ -20,14 +21,17 @@ func _ready():
 	if not OS.has_feature("dedicated_server"):
 		add_player(1)
 
+
 func add_player(id: int):
 	var character = preload("res://scenes/lobby_ui/player_name.tscn").instantiate()
 	#Set the players idD
 	character.player_name = str(id)
 	$Teams/TeamList.add_player(character)
 
+
 func del_player(id: int):
 	$Teams/TeamList.delete_player(id)
+
 
 func _exit_tree():
 	if not multiplayer.is_server():
@@ -35,14 +39,17 @@ func _exit_tree():
 	multiplayer.peer_connected.disconnect(add_player)
 	multiplayer.peer_disconnected.disconnect(del_player)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
-	$StartButtons/StartButton.disabled = not multiplayer.is_server() || not $Teams/TeamList.all_players_ready()
+	if $Teams/TeamList.all_players_ready():
+		start_timer -= delta
+	else:
+		start_timer = start_time_s
+	
+	$StartButtons/StartCountdown.text = str(int(start_timer))
+	if multiplayer.is_server() && start_timer <= 0:
+		rootNode.change_world.call_deferred(load("res://scenes/world.tscn"))
 
 
-func _on_start_button_pressed():
-	rootNode.change_world.call_deferred(load("res://scenes/world.tscn"))
-
-
-func _on_ready_button_pressed():
-	$Teams/TeamList.player_ready.rpc(multiplayer.get_unique_id())
+func _on_ready_button_toggled(toggled_on):
+	$Teams/TeamList.set_ready.rpc(multiplayer.get_unique_id(), toggled_on)
