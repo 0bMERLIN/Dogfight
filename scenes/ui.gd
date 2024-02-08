@@ -8,10 +8,7 @@ signal game_started
 
 func _ready():
 	pass
-	
-func on_game_over():
-	end_of_game_screen.visible=true
-	
+
 func _on_restart_button_pressed():
 	get_tree().reload_current_scene()
 
