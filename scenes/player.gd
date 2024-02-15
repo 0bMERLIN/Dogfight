@@ -1,9 +1,11 @@
 # player.gd
 extends CharacterBody3D
 
-const ANGULAR_SPEED_PITCH = 50.0
-const ANGULAR_SPEED_ROLL = 80.0
-const ANGULAR_SPEED_YAW = 50.0
+@export var rot_acc = Vector3(0.01, 0.01, 0.04)
+@export var max_rot_vel = Vector3(0.015, 0.015, 0.03)
+@export var turn_camera_mode=false;
+
+var rot_vel = Vector3()
 
 # Set by the authority, synchronized on spawn.
 @export var player := 1 :
@@ -24,21 +26,33 @@ func _ready():
 	# Set the camera as current if we are this player.
 	if player == multiplayer.get_unique_id():
 		$CamRoot/Camera.current = true
-	else:
-		$Hud/SubViewportContainer.hide()
-	$CamRoot/Camera.input = input
+	rotation = Vector3(0, PI, 0)
 	# Only process on server.
 	# EDIT: Let the client simulate player movement too to compesate network input latency.
 	# set_physics_process(multiplayer.is_server())
 
 
 func _physics_process(delta):
-	rotate_object_local(Vector3(1, 0, 0), input.rotation_speeds.x * ANGULAR_SPEED_PITCH * delta * (PI / 180.0))
-	rotate_object_local(Vector3(0, 0, 1), input.rotation_speeds.y * ANGULAR_SPEED_ROLL * delta * (PI / 180.0))
-	rotate_object_local(Vector3(0, 1, 0), input.rotation_speeds.z * ANGULAR_SPEED_YAW * delta * (PI / 180.0))
+	var target_rot_vel = $Input.input_dir*max_rot_vel
 	
-	# Move the plane forward.
-	translate(Vector3(0, 0, input.speed * delta))
+	rot_vel.x += sign(target_rot_vel.x-rot_vel.x)*rot_acc.x*delta
+	rot_vel.y += sign(target_rot_vel.y-rot_vel.y)*rot_acc.y*delta
+	rot_vel.z += sign(target_rot_vel.z-rot_vel.z)*rot_acc.z*delta
+	
+	print(target_rot_vel)
+	
+	rotate(transform.basis.x.normalized(), rot_vel.x)
+	rotate(transform.basis.y.normalized(), rot_vel.y)
+	rotate(transform.basis.z.normalized(), rot_vel.z)
+	if turn_camera_mode:
+		if Input.is_action_pressed("game_c"):
+			$CamRoot.rotation.y=PI
+		else:
+			$CamRoot.rotation.y=0
+	else:	
+		if Input.is_action_just_pressed("game_c"):
+			$CamRoot.rotation.y=PI if $CamRoot.rotation.y == 0 else 0
+	global_translate(transform.basis.z*delta*40)
 	
 	if(input.firering):
 		if not multiplayer.is_server():
