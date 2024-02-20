@@ -1,10 +1,19 @@
 extends Control
 
-@export var rootNode : Node
+var rootNode : Node
 @export var start_time_s : int
 var start_timer : float = start_time_s
 
+@onready var hangar
+
 func _ready():
+	
+	rootNode = get_parent().get_parent()
+	
+	# create hangar
+	hangar = preload("res://scenes/hangar.tscn").instantiate()
+	hangar.rootNode = rootNode
+	$SubViewportContainer/SubViewport.add_child(hangar)
 	
 	#Only spawn players as the server
 	if not multiplayer.is_server():
@@ -49,7 +58,10 @@ func _process(delta):
 	$StartButtons/StartCountdown.text = str(int(start_timer))
 	if multiplayer.is_server() && start_timer <= 0:
 		rootNode.change_world.call_deferred(load("res://scenes/world.tscn"))
+		
 
 
 func _on_ready_button_toggled(toggled_on):
 	$Teams/TeamList.set_ready.rpc(multiplayer.get_unique_id(), toggled_on)
+	#rootNode.set_player_info(multiplayer.get_unique_id(), hangar.get_current_ship_config().encode_to_text())
+	rootNode.set_player_info.rpc(multiplayer.get_unique_id(), hangar.get_current_ship_config().encode_to_text())

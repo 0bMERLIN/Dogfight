@@ -1,7 +1,16 @@
-# multiplayer.gd
+# multiplayer.gd  HOW TF DO ALL CLIENTS GET rootNode??????
 extends Node
 
 const PORT = 4433
+
+var player_ship_info_CFG : Dictionary # id, .CFG
+
+@rpc("any_peer", "call_local", "reliable")
+func set_player_info(id: int, data_CFG: String):
+	print(id, " @ ", multiplayer.get_unique_id())
+	var config = ConfigFile.new()
+	config.parse(data_CFG)
+	player_ship_info_CFG[id] = config
 
 func _ready():
 	#Pause the game at the start
@@ -61,7 +70,6 @@ func change_world(scene: PackedScene):
 		
 	#Load new world
 	var s = scene.instantiate()
-	s.rootNode = self
 	world.add_child(s)
 
 func start_lobby():
@@ -72,6 +80,7 @@ func start_lobby():
 
 func _on_peer_connected(id):
 	print("Peer connected. Id: ", id)
+	player_ship_info_CFG.erase(id)	
 	
 func _on_peer_disconnected(id):
 	print("Peer disconnected. Id: ", id)

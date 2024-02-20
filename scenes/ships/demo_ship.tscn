@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dswnyxd6st30e"]
+
+[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_lpllq"]
+[ext_resource type="Script" path="res://scenes/ship_config.gd" id="1_s0si0"]
+
+[node name="DemoShip" type="Node3D"]
+script = ExtResource("1_s0si0")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_lpllq")]
+
+[node name="AttachmentPoints" type="Node3D" parent="."]
+
+[node name="WingAttachmentPoint" type="Node3D" parent="AttachmentPoints"]
+
+[node name="Bingus" type="Node3D" parent="AttachmentPoints/WingAttachmentPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52296, 0.383316, -0.368538)
+
+[node name="TailAttachmentPoint" type="Node3D" parent="AttachmentPoints"]
+
+[node name="Bingus" type="Node3D" parent="AttachmentPoints/TailAttachmentPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

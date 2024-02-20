@@ -1,10 +1,12 @@
 extends Node3D
 
-@export var rootNode : Node
+var rootNode : Node
 
 const RANDOM_SPAWN_RADIUS := 5.0
 
 func _ready():
+	rootNode = get_parent().get_parent()
+	
 	#Only spawn players as the server
 	if not multiplayer.is_server():
 		return
@@ -30,7 +32,7 @@ func _exit_tree():
 
 func add_player(id: int):
 	var character = preload("res://scenes/player.tscn").instantiate()
-	#Set the players id
+	
 	character.player = id
 	#Spawn the player at a random position
 	var pos := Vector2.from_angle(randf() * 2 * PI)
@@ -38,6 +40,7 @@ func add_player(id: int):
 	character.name = str(id)
 	character.BulletsCollection = $Bullets
 	character.PlayerCollection = $Players
+	
 	$Players.add_child(character, true)
 
 func del_player(id: int):

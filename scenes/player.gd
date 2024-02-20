@@ -20,13 +20,22 @@ const ANGULAR_SPEED_YAW = 50.0
 @export var Missile : PackedScene
 @export var PlayerCollection: Node
 
+var Ship_config : ConfigFile
+
 func _ready():
+	var rootNode = get_tree().root.get_child(0)
+	Ship_config = rootNode.player_ship_info_CFG[player]
+	
 	# Set the camera as current if we are this player.
 	if player == multiplayer.get_unique_id():
 		$CamRoot/Camera.current = true
 	else:
 		$Hud/SubViewportContainer.hide()
 	$CamRoot/Camera.input = input
+	
+	var s = load(Ship_config.get_value("", "ship_scene")).instantiate()
+	s.ship_config = Ship_config
+	add_child(s)
 	# Only process on server.
 	# EDIT: Let the client simulate player movement too to compesate network input latency.
 	# set_physics_process(multiplayer.is_server())

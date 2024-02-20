@@ -1,6 +1,5 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8koycu85ebae"]
+[gd_scene load_steps=14 format=3 uid="uid://c8koycu85ebae"]
 
-[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_7nxc5"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
 [ext_resource type="Script" path="res://scenes/input.gd" id="3_a2r12"]
 [ext_resource type="Script" path="res://scenes/camera.gd" id="3_ls23w"]
@@ -53,8 +52,6 @@ Missile = ExtResource("3_y2kfx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.833422, 0.39799)
 shape = SubResource("CapsuleShape3D_6kyf5")
-
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_7nxc5")]
 
 [node name="Input" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../Sync")

@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://83k0m2ridurs"]
+
+[ext_resource type="Script" path="res://scenes/hangar.gd" id="1_3x4y5"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jfjom"]
+
+[node name="Hangar" type="Node3D"]
+script = ExtResource("1_3x4y5")
+
+[node name="CamPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CamPivot"]
+transform = Transform3D(-1, -1.77636e-15, -8.74228e-08, -2.13123e-08, 0.969829, 0.243784, 8.47852e-08, 0.243784, -0.969829, 0, 2.06177, -7.16436)
+current = true
+
+[node name="Ship" type="Node" parent="."]
+
+[node name="ShipName" type="Label" parent="."]
+offset_left = 375.0
+offset_top = 589.0
+offset_right = 564.0
+offset_bottom = 626.0
+
+[node name="Prev" type="Button" parent="."]
+offset_left = 306.0
+offset_top = 591.0
+offset_right = 324.0
+offset_bottom = 622.0
+text = "<"
+
+[node name="Next" type="Button" parent="."]
+offset_left = 610.0
+offset_top = 591.0
+offset_right = 628.0
+offset_bottom = 622.0
+text = ">"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.67452, 0, 0, 0, 1, 0, 0, 0, 1.65479, 0, -0.855535, 0)
+mesh = SubResource("PlaneMesh_jfjom")
+
+[connection signal="pressed" from="Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="Next" to="." method="_on_next_pressed"]

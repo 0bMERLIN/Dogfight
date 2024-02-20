@@ -2,7 +2,6 @@ extends CanvasLayer
 
 class_name ui
 signal game_started
-@onready var end_of_game_screen =$End_of_game_screen
 @onready var setting_screen=$Setting_screen
 @onready var before_game_screen=$before_game_screen
 
@@ -15,7 +14,6 @@ func _on_restart_button_pressed():
 
 func _on_play_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
-
 
 
 func _on_settings_button_pressed():

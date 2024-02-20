@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfym3fprat1tm"]
+
+[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_5f24h"]
+[ext_resource type="Script" path="res://scenes/attachments/Bingus.gd" id="1_lmrsh"]
+
+[node name="Bingus" type="Node3D"]
+script = ExtResource("1_lmrsh")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_5f24h")]
+transform = Transform3D(0.276636, 0, 0, 0, 0.489009, 0, 0, 0, 0.235101, 0, 0, 0)
