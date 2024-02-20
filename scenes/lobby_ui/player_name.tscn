@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn5o0mvy2bctl"]
+
+[ext_resource type="Script" path="res://scenes/lobby_ui/player_name.gd" id="1_dbowk"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tt6f5"]
+properties/0/path = NodePath(".:player_name")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[sub_resource type="SystemFont" id="SystemFont_xokqe"]
+font_names = PackedStringArray("DejaVu Sans Mono")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jq7ir"]
+font = SubResource("SystemFont_xokqe")
+
+[node name="PlayerName" type="Control"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dbowk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Spieler"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_tt6f5")
+
+[node name="ReadyLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 209.0
+offset_top = 10.0
+offset_right = 267.0
+offset_bottom = 29.0
+text = "ready."
+label_settings = SubResource("LabelSettings_jq7ir")

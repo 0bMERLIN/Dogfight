@@ -8,7 +8,7 @@ script = ExtResource("1_r6yre")
 [node name="World" type="Node" parent="."]
 
 [node name="WorldSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/world.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/world.tscn", "res://scenes/lobby_ui/lobby.tscn")
 spawn_path = NodePath("../World")
 spawn_limit = 1
 

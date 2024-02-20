@@ -6,5 +6,6 @@ func _ready():
 	pass
 
 func _process(delta):
-	$CamRoot.rotation.y = -player.rotation.y
-	$CamRoot.rotation.x = player.rotation.x
+	if player != null:
+		$CamRoot.rotation.y = -player.rotation.y
+		$CamRoot.rotation.x = player.rotation.x

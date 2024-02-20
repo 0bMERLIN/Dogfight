@@ -3,7 +3,7 @@ extends MultiplayerSynchronizer
 
 #Syncronize properties
 @export var rotation_speeds := Vector3()
-@export var speed := 10.0
+@export var speed := 0.0
 @export var firering := false
 @export var missile := false
 @export var Target : String

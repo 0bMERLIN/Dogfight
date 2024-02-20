@@ -1,7 +1,16 @@
-# multiplayer.gd
+# multiplayer.gd  HOW TF DO ALL CLIENTS GET rootNode??????
 extends Node
 
 const PORT = 4433
+
+var player_ship_info_CFG : Dictionary # id, .CFG
+
+@rpc("any_peer", "call_local", "reliable")
+func set_player_info(id: int, data_CFG: String):
+	print(id, " @ ", multiplayer.get_unique_id())
+	var config = ConfigFile.new()
+	config.parse(data_CFG)
+	player_ship_info_CFG[id] = config
 
 func _ready():
 	#Pause the game at the start
@@ -27,7 +36,7 @@ func _on_host_pressed():
 	peer.peer_connected.connect(_on_peer_connected)
 	
 	multiplayer.multiplayer_peer = peer
-	start_game()
+	start_lobby()
 
 
 func _on_connect_pressed():
@@ -48,7 +57,7 @@ func _on_connect_pressed():
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	
-	start_game()
+	start_lobby()
 	
 func change_world(scene: PackedScene):
 	#Get the world node
@@ -60,16 +69,18 @@ func change_world(scene: PackedScene):
 		child.queue_free()
 		
 	#Load new world
-	world.add_child(scene.instantiate())
+	var s = scene.instantiate()
+	world.add_child(s)
 
-func start_game():
+func start_lobby():
 	$UI.hide()
 	get_tree().paused = false
 	if multiplayer.is_server():
-		change_world.call_deferred(load("res://scenes/world.tscn"))
+		change_world.call_deferred(load("res://scenes/lobby_ui/lobby.tscn"))
 
 func _on_peer_connected(id):
 	print("Peer connected. Id: ", id)
+	player_ship_info_CFG.erase(id)	
 	
 func _on_peer_disconnected(id):
 	print("Peer disconnected. Id: ", id)

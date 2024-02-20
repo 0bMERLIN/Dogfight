@@ -6,19 +6,6 @@
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_pq24k")
 
-[node name="End_of_game_screen" type="Node2D" parent="."]
-visible = false
-
-[node name="restartButton" type="Button" parent="End_of_game_screen"]
-offset_left = 264.0
-offset_top = 50.0
-offset_right = 388.0
-offset_bottom = 171.0
-
-[node name="Sprite2D" type="Sprite2D" parent="End_of_game_screen/restartButton"]
-position = Vector2(59, 63)
-texture = ExtResource("2_05nd3")
-
 [node name="before_game_screen" type="Node2D" parent="."]
 position = Vector2(397, 182)
 
@@ -68,7 +55,6 @@ offset_bottom = 69.0
 position = Vector2(62, 68)
 texture = ExtResource("2_05nd3")
 
-[connection signal="pressed" from="End_of_game_screen/restartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="before_game_screen/playButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="before_game_screen/quitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="before_game_screen/settingsButton" to="." method="_on_settings_button_pressed"]

@@ -1,6 +1,5 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8koycu85ebae"]
+[gd_scene load_steps=14 format=3 uid="uid://c8koycu85ebae"]
 
-[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_7nxc5"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
 [ext_resource type="Script" path="res://scenes/input.gd" id="3_a2r12"]
 [ext_resource type="Script" path="res://scenes/camera.gd" id="3_ls23w"]
@@ -54,8 +53,6 @@ Missile = ExtResource("3_y2kfx")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.833422, 0.39799)
 shape = SubResource("CapsuleShape3D_6kyf5")
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_7nxc5")]
-
 [node name="Input" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../Sync")
 replication_config = SubResource("SceneReplicationConfig_ulg38")
@@ -96,9 +93,9 @@ render_target_update_mode = 4
 [node name="ShipControls" parent="Hud/SubViewportContainer/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("7_tcrqv")]
 player = NodePath("../../../..")
 
-[node name="NavballRotationIndicator" type="Sprite2D" parent="Hud" node_paths=PackedStringArray("player")]
-position = Vector2(599, 578)
+[node name="NavballRotationIndicator" type="Sprite2D" parent="Hud/SubViewportContainer" node_paths=PackedStringArray("player")]
+position = Vector2(255, 256)
 scale = Vector2(0.0828595, 0.0828595)
 texture = ExtResource("8_fxt0k")
 script = ExtResource("9_221bg")
-player = NodePath("../..")
+player = NodePath("../../..")
