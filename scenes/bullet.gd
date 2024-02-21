@@ -14,3 +14,10 @@ func _process(delta):
 func _on_timer_timeout():
 	if(multiplayer.is_server()):
 		queue_free()
+
+
+func _on_body_entered(body):
+	if multiplayer.is_server():
+		print("Hit: ", body)
+		body.hit(1)
+		queue_free()

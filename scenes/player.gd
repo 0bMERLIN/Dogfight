@@ -7,7 +7,6 @@ extends CharacterBody3D
 
 var rot_vel = Vector3()
 
-
 const lockOnRange = 30
 const lockOnTime = 2.0
 var lockOnTimer
@@ -27,12 +26,17 @@ var lockOnTimer
 @export var Missile : PackedScene
 @export var PlayerCollection: Node
 
+@export var hitpoints = 100
+
 func _ready():
 	# Set the camera as current if we are this player.
 	if player == multiplayer.get_unique_id():
 		$CamRoot/Camera.current = true
+	else:
+		$Hud.hide()
 	rotation = Vector3(0, PI, 0)
-	$Hud/EnemyMarker.hide()
+	$Overlays/EnemyMarker.hide()
+	
 	# Only process on server.
 	# EDIT: Let the client simulate player movement too to compesate network input latency.
 	# set_physics_process(multiplayer.is_server())
@@ -70,8 +74,8 @@ func _physics_process(delta):
 			if target != self:
 				if !$CamRoot/Camera.is_position_behind(target.global_position):
 					var targetCamPos = $CamRoot/Camera.unproject_position(target.global_position)
-					target.get_node("Hud/EnemyMarker").show()
-					target.get_node("Hud/EnemyMarker").position = targetCamPos - Vector2(7, 7)
+					target.get_node("Overlays/EnemyMarker").show()
+					target.get_node("Overlays/EnemyMarker").position = targetCamPos - Vector2(7, 7)
 					
 					var targetDist = ($Hud/Hud/Control/Crosshair.position - targetCamPos).length()
 					if targetDist < closestTargetDist:
@@ -93,6 +97,14 @@ func _physics_process(delta):
 			else:
 				lockOnTimer = 0
 	
+	$Hud/Hp.text = str(hitpoints)
+	
+	if hitpoints <= 0:
+		$Overlays/EnemyMarker.hide()
+		if multiplayer.is_server():
+			position = Vector3(0, 0, 0)
+			hitpoints = 100
+	
 	if(input.firering):
 		if not multiplayer.is_server():
 			return
@@ -113,3 +125,6 @@ func missile():
 	m.target = PlayerCollection.get_node($Input.Target)
 	BulletsCollection.add_child(m, true)
 	m.transform = $BulletMuzzle.global_transform
+
+func hit(dmg):
+	hitpoints -= dmg

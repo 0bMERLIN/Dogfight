@@ -42,20 +42,23 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:hitpoints")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [sub_resource type="World3D" id="World3D_xv7od"]
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.715279, 0)
 script = ExtResource("1_ukpfr")
 Bullet = ExtResource("5_5kv62")
 Missile = ExtResource("3_y2kfx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.833422, 0.39799)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.121797, 0.39799)
 shape = SubResource("CapsuleShape3D_6kyf5")
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("1_7nxc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.711625, 0)
 
 [node name="Input" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../Sync")
@@ -66,14 +69,17 @@ script = ExtResource("3_a2r12")
 replication_config = SubResource("SceneReplicationConfig_cg8ge")
 
 [node name="CamRoot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.711625, 0)
 
 [node name="Camera" type="Camera3D" parent="CamRoot"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.715246, 1.63648)
 
 [node name="BulletMuzzle" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.723139, 2.76856)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0115137, 3.84577)
 
-[node name="Hud" type="Node" parent="."]
+[node name="Hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="TargetRect" type="TextureRect" parent="Hud"]
 offset_right = 40.0
@@ -81,6 +87,7 @@ offset_bottom = 40.0
 rotation = 0.785398
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_mq0t7")
+metadata/_edit_use_anchors_ = true
 
 [node name="PreTargetRect" type="TextureRect" parent="Hud"]
 offset_right = 128.0
@@ -88,12 +95,14 @@ offset_bottom = 128.0
 rotation = 0.785398
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_mq0t7")
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Hud"]
 offset_left = 344.0
 offset_top = 322.0
 offset_right = 856.0
 offset_bottom = 834.0
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="Hud/SubViewportContainer"]
 own_world_3d = true
@@ -114,8 +123,19 @@ player = NodePath("../../..")
 
 [node name="Hud" parent="Hud" instance=ExtResource("11_8m584")]
 
-[node name="EnemyMarker" type="TextureRect" parent="Hud"]
+[node name="Hp" type="Label" parent="Hud"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Overlays" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EnemyMarker" type="TextureRect" parent="Overlays"]
 offset_right = 64.0
 offset_bottom = 64.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("11_se6ka")
+metadata/_edit_use_anchors_ = true

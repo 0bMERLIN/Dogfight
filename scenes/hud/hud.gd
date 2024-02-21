@@ -4,11 +4,13 @@ extends Node2D
 @export var deadzone = 15
 @export var dir : Vector2
 
-var paused = false
+var paused = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.warp_mouse($Control/Crosshair.position)
+	if multiplayer.is_server():
+		paused = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
