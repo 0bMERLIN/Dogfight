@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://c8koycu85ebae"]
 
-[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_7nxc5"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
 [ext_resource type="Script" path="res://scenes/input.gd" id="3_a2r12"]
 [ext_resource type="PackedScene" uid="uid://ctcbhkbbq83qf" path="res://scenes/missile.tscn" id="3_y2kfx"]
+[ext_resource type="PackedScene" uid="uid://yfs8xyfv7wtq" path="res://assets/ships/Middle_Space_Ship.blend" id="4_nuc5i"]
 [ext_resource type="PackedScene" uid="uid://ovmwcyo8xlke" path="res://scenes/bullet.tscn" id="5_5kv62"]
 [ext_resource type="Texture2D" uid="uid://dnk41lrppqiy7" path="res://assets/target_overlay.png" id="6_mq0t7"]
 [ext_resource type="PackedScene" uid="uid://ped4jqinp4y2" path="res://scenes/ship_controls.tscn" id="7_tcrqv"]
@@ -57,8 +57,7 @@ Missile = ExtResource("3_y2kfx")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.121797, 0.39799)
 shape = SubResource("CapsuleShape3D_6kyf5")
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_7nxc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.711625, 0)
+[node name="Middle_Space_Ship" parent="." instance=ExtResource("4_nuc5i")]
 
 [node name="Input" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../Sync")
@@ -72,7 +71,7 @@ replication_config = SubResource("SceneReplicationConfig_cg8ge")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.711625, 0)
 
 [node name="Camera" type="Camera3D" parent="CamRoot"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.715246, 1.63648)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.77988, 10.0718)
 
 [node name="BulletMuzzle" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0115137, 3.84577)
@@ -82,6 +81,7 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="TargetRect" type="TextureRect" parent="Hud"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 rotation = 0.785398
@@ -90,6 +90,7 @@ texture = ExtResource("6_mq0t7")
 metadata/_edit_use_anchors_ = true
 
 [node name="PreTargetRect" type="TextureRect" parent="Hud"]
+layout_mode = 0
 offset_right = 128.0
 offset_bottom = 128.0
 rotation = 0.785398
@@ -98,6 +99,7 @@ texture = ExtResource("6_mq0t7")
 metadata/_edit_use_anchors_ = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Hud"]
+layout_mode = 0
 offset_left = 344.0
 offset_top = 322.0
 offset_right = 856.0
@@ -124,6 +126,7 @@ player = NodePath("../../..")
 [node name="Hud" parent="Hud" instance=ExtResource("11_8m584")]
 
 [node name="Hp" type="Label" parent="Hud"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -134,8 +137,13 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="EnemyMarker" type="TextureRect" parent="Overlays"]
+layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("11_se6ka")
 metadata/_edit_use_anchors_ = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84027, 10.2682)
+light_energy = 0.515

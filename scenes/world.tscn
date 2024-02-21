@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://blje2bayyx8x2"]
+[gd_scene load_steps=7 format=3 uid="uid://blje2bayyx8x2"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_1pi3t"]
 [ext_resource type="Texture2D" uid="uid://cjfncepf3diik" path="res://assets/skybox.jpeg" id="2_bmhps"]
+[ext_resource type="PackedScene" uid="uid://yfs8xyfv7wtq" path="res://assets/ships/Middle_Space_Ship.blend" id="3_gf4r1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_s11q0"]
 panorama = ExtResource("2_bmhps")
@@ -16,9 +17,6 @@ sky = SubResource("Sky_mlaso")
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_1pi3t")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.8731, 0)
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
@@ -35,3 +33,6 @@ environment = SubResource("Environment_8dm5x")
 [node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/bullet.tscn", "res://scenes/missile.tscn")
 spawn_path = NodePath("../Bullets")
+
+[node name="Middle_Space_Ship" parent="." instance=ExtResource("3_gf4r1")]
+transform = Transform3D(56.6703, 0, 0, 0, 56.6703, 0, 0, 0, 56.6703, 0, 0, 0)
