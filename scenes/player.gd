@@ -62,28 +62,36 @@ func _physics_process(delta):
 	
 	
 	$Hud/TargetRect.hide()
+	$Hud/PreTargetRect.hide()
 	if $CamRoot/Camera.current:
+		var closestTarget = null
+		var closestTargetDist = INF
 		for target in get_parent().get_children():
 			if target != self:
-				var closestTarget = null
-				var closestTargetDist = INF
 				if !$CamRoot/Camera.is_position_behind(target.global_position):
 					var targetCamPos = $CamRoot/Camera.unproject_position(target.global_position)
 					target.get_node("Hud/EnemyMarker").show()
 					target.get_node("Hud/EnemyMarker").position = targetCamPos - Vector2(7, 7)
 					
 					var targetDist = ($Hud/Hud/Control/Crosshair.position - targetCamPos).length()
-					
-					if targetDist < lockOnRange:
-						lockOnTimer += delta
-						if lockOnTimer >= lockOnTime:
-							$Input.Target = target.name
-					else:
-						lockOnTimer = 0
-					
+					if targetDist < closestTargetDist:
+						closestTargetDist = targetDist
+						closestTarget = target
 					if target.name == $Input.Target:
 						$Hud/TargetRect.show()
-						$Hud/TargetRect.position = $CamRoot/Camera.unproject_position(target.global_position) - Vector2(64, 64)
+						$Hud/TargetRect.modulate.a = 1
+						$Hud/TargetRect.position = $CamRoot/Camera.unproject_position(target.global_position) - Vector2(0, 16)
+					
+		if closestTarget != null:
+			if closestTargetDist < lockOnRange:
+				lockOnTimer += delta
+				$Hud/PreTargetRect.show()
+				$Hud/PreTargetRect.modulate.a = lockOnTimer/lockOnTime
+				$Hud/PreTargetRect.position = $CamRoot/Camera.unproject_position(closestTarget.global_position) - Vector2(0, 16)
+				if lockOnTimer >= lockOnTime:
+					$Input.Target = closestTarget.name
+			else:
+				lockOnTimer = 0
 	
 	if(input.firering):
 		if not multiplayer.is_server():

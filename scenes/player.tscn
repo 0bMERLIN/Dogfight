@@ -78,6 +78,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.723139, 2.76856)
 [node name="TargetRect" type="TextureRect" parent="Hud"]
 offset_right = 40.0
 offset_bottom = 40.0
+rotation = 0.785398
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_mq0t7")
+
+[node name="PreTargetRect" type="TextureRect" parent="Hud"]
+offset_right = 128.0
+offset_bottom = 128.0
+rotation = 0.785398
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_mq0t7")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Hud"]
