@@ -1,9 +1,10 @@
 # player.gd
 extends CharacterBody3D
 
-@export var rot_acc = Vector3(0.01, 0.01, 0.04)
+@export var rot_acc = Vector3(0.015, 0.015, 0.04)
 @export var max_rot_vel = Vector3(0.015, 0.015, 0.03)
-@export var turn_camera_mode=false;
+@export var turn_camera_mode = false;
+@export var radar : PackedScene
 
 var rot_vel = Vector3()
 
@@ -32,6 +33,11 @@ func _ready():
 	# Set the camera as current if we are this player.
 	if player == multiplayer.get_unique_id():
 		$CamRoot/Camera.current = true
+		var radar_scene = radar.instantiate()
+		radar_scene.players_scene = get_tree().get_root().get_node("Game/World/World/Players")
+		print(radar_scene.players_scene.get_children())
+		radar_scene.main_player = self
+		$Hud/RadarViewport.add_child(radar_scene)
 	else:
 		$Hud.hide()
 	rotation = Vector3(0, PI, 0)

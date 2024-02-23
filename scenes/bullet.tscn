@@ -10,10 +10,12 @@ emission_energy_multiplier = 1.4
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gbylx"]
 material = SubResource("StandardMaterial3D_uuc8o")
-radius = 0.1
+radius = 0.2
+height = 10.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hte8v"]
-radius = 0.1
+radius = 0.2
+height = 10.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5cgdd"]
 properties/0/path = NodePath(".:position")

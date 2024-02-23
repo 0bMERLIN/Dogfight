@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cr8dkc1wogfue"]
+
+[ext_resource type="Script" path="res://scenes/hud/radar.gd" id="1_pf1tv"]
+[ext_resource type="PackedScene" uid="uid://ci4yj21rug85p" path="res://scenes/hud/radar_enemy.tscn" id="2_448hy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_471jp"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_gyoga"]
+material = SubResource("StandardMaterial3D_471jp")
+
+[node name="Radar" type="Node3D"]
+script = ExtResource("1_pf1tv")
+enemy_marker = ExtResource("2_448hy")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, -4.57758e-08, 0.851955, 0.523614, 7.44803e-08, 0.523614, -0.851955, 0, 5.55027, -7)
+
+[node name="Reference" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_gyoga")

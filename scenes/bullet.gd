@@ -8,7 +8,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var forward_dir = global_transform.basis.z.normalized()
-	global_translate(forward_dir * 160 * delta)
+	global_translate(forward_dir * 800 * delta)
 
 
 func _on_timer_timeout():

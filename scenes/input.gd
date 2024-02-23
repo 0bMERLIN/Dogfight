@@ -28,7 +28,7 @@ func _process(delta):
 	if Input.is_action_pressed("game_d") || Input.is_action_pressed("game_a"):
 		input_dir.z = Input.get_action_strength("game_d")-Input.get_action_strength("game_a")
 	
-	speed += (Input.get_action_strength("game_w")-Input.get_action_strength("game_s"))*delta*5
+	speed += (Input.get_action_strength("game_w")-Input.get_action_strength("game_s"))*delta*50
 	
 	firering = Input.is_action_pressed("ui_accept")
 	missile = Input.is_action_just_pressed("ui_focus_next")
