@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8koycu85ebae"]
+[gd_scene load_steps=27 format=3 uid="uid://c8koycu85ebae"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
 [ext_resource type="PackedScene" uid="uid://cr8dkc1wogfue" path="res://scenes/hud/radar.tscn" id="2_ak20a"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scenes/navball_rotation_indicator.gd" id="9_221bg"]
 [ext_resource type="PackedScene" uid="uid://bqncyxpelpdbx" path="res://scenes/hud/hud.tscn" id="11_8m584"]
 [ext_resource type="Texture2D" uid="uid://boi0x4ijf7loj" path="res://assets/hud/enemymarker.png" id="11_se6ka"]
+[ext_resource type="PackedScene" uid="uid://ovkntav0jvnu" path="res://scenes/hud/health_bar.tscn" id="12_w0yq6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6kyf5"]
 radius = 5.011
@@ -79,6 +80,8 @@ albedo_texture = SubResource("ViewportTexture_pfw3r")
 [sub_resource type="PlaneMesh" id="PlaneMesh_ovqcv"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_nuuhf")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_56p7g"]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_ukpfr")
@@ -164,6 +167,13 @@ own_world_3d = true
 world_3d = SubResource("World3D_8pxdk")
 transparent_bg = true
 
+[node name="HpViewport" type="SubViewport" parent="Hud"]
+own_world_3d = true
+world_3d = SubResource("World3D_8pxdk")
+transparent_bg = true
+
+[node name="HealthBar" parent="Hud/HpViewport" instance=ExtResource("12_w0yq6")]
+
 [node name="Overlays" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -182,11 +192,16 @@ metadata/_edit_use_anchors_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84027, 10.2682)
 light_energy = 0.515
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="NavBallMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.2, -1.74846e-08, 7.64274e-16, -1.2044e-08, 0.137767, -0.144984, 1.26749e-08, -0.144984, -0.137767, 0, 0.106577, 11.7393)
 mesh = SubResource("PlaneMesh_1ta4k")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="RadarMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.2, -1.74846e-08, 1.52733e-15, -4.97495e-09, 0.0569065, -0.191734, 1.67619e-08, -0.191734, -0.0569065, 0.463603, 0.263822, 11.597)
 mesh = SubResource("PlaneMesh_ovqcv")
-skeleton = NodePath("../MeshInstance3D")
+skeleton = NodePath("../NavBallMesh")
+
+[node name="HpMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.2, -3.42467e-08, -4.97493e-09, -4.97495e-09, 0.0569065, -0.191734, 3.42466e-08, -0.191734, -0.0569065, -0.48673, 0.263822, 11.597)
+mesh = SubResource("PlaneMesh_56p7g")
+skeleton = NodePath("../NavBallMesh")
