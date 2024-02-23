@@ -11,9 +11,9 @@ func _ready():
 			var playerpoint = enemy_marker.instantiate()
 			playerpoint.player = player
 			playerpoint.reference = main_player
-			$Reference.add_child(playerpoint)
+			add_child(playerpoint)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$Reference.rotation = main_player.global_rotation
+	$Reference.global_rotation = main_player.global_rotation

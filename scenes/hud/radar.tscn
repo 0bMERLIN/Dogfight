@@ -13,8 +13,10 @@ material = SubResource("StandardMaterial3D_471jp")
 script = ExtResource("1_pf1tv")
 enemy_marker = ExtResource("2_448hy")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, -4.57758e-08, 0.851955, 0.523614, 7.44803e-08, 0.523614, -0.851955, 0, 5.55027, -7)
-
 [node name="Reference" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_gyoga")
+
+[node name="Camera3D" type="Camera3D" parent="Reference"]
+transform = Transform3D(-1, 0, -8.74228e-08, -2.87634e-08, 0.944325, 0.329015, 8.25555e-08, 0.329015, -0.944325, 0, 5.95728, -14)
+projection = 1
+size = 23.901
