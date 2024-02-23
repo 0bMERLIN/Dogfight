@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://blje2bayyx8x2"]
+[gd_scene load_steps=9 format=3 uid="uid://blje2bayyx8x2"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_1pi3t"]
 [ext_resource type="Texture2D" uid="uid://cjfncepf3diik" path="res://assets/skybox.jpeg" id="2_bmhps"]
-[ext_resource type="PackedScene" uid="uid://yfs8xyfv7wtq" path="res://assets/ships/Middle_Space_Ship.blend" id="3_gf4r1"]
+[ext_resource type="PackedScene" uid="uid://bnb6p2cik2enw" path="res://assets/world/Space_Station.blend" id="3_aynq6"]
+[ext_resource type="PackedScene" uid="uid://bvx58k6nygwa" path="res://assets/world/Stein1.blend" id="4_8vq5q"]
+[ext_resource type="PackedScene" uid="uid://cl463xruxskyc" path="res://assets/world/Stein2.blend" id="5_soau8"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_s11q0"]
 panorama = ExtResource("2_bmhps")
@@ -34,5 +36,11 @@ environment = SubResource("Environment_8dm5x")
 _spawnable_scenes = PackedStringArray("res://scenes/bullet.tscn", "res://scenes/missile.tscn")
 spawn_path = NodePath("../Bullets")
 
-[node name="Middle_Space_Ship" parent="." instance=ExtResource("3_gf4r1")]
-transform = Transform3D(56.6703, 0, 0, 0, 56.6703, 0, 0, 0, 56.6703, 0, 0, 0)
+[node name="Space_Station" parent="." instance=ExtResource("3_aynq6")]
+transform = Transform3D(31.1399, 0, 0, 0, 31.1399, 0, 0, 0, 31.1399, 16.9778, 32.4547, 553.469)
+
+[node name="Stein1" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(14.8027, 0, 0, 0, 14.8027, 0, 0, 0, 14.8027, 208.933, 191.264, -868.467)
+
+[node name="Stein2" parent="." instance=ExtResource("5_soau8")]
+transform = Transform3D(13.8895, 0, 0, 0, 13.8895, 0, 0, 0, 13.8895, 35.0976, 443.538, -1260.86)
