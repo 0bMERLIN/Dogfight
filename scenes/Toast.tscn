@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://v21yihl4dkwq"]
+
+[ext_resource type="Script" path="res://scenes/Toast.gd" id="1_6owin"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3wj6d"]
+
+[node name="Toast" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6owin")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 202.0
+offset_bottom = 62.0
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 198.0
+offset_bottom = 58.0
+color = Color(0, 0, 0, 0.803922)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 195.0
+offset_bottom = 47.0
+label_settings = SubResource("LabelSettings_3wj6d")
+autowrap_mode = 3

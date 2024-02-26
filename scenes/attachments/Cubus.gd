@@ -6,10 +6,10 @@ var config : Dictionary :
 		update_cfg()
 
 func update_cfg():
-	var sc = .5 + config["Level"]["current"]*0.02
-	$Sketchfab_Scene.scale.x = sc
-	$Sketchfab_Scene.scale.y = sc
-	$Sketchfab_Scene.scale.z = sc
+	var sc = 1 + config["Cubusness"]["current"]*0.02
+	$MeshInstance3D.scale.x = sc
+	$MeshInstance3D.scale.y = sc
+	$MeshInstance3D.scale.z = sc
 
 func _ready():
 	update_cfg()

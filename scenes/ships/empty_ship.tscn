@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0h77g1t42hvs"]
-
-[ext_resource type="Script" path="res://scenes/ship_config.gd" id="1_rmc1l"]
-
-[node name="EmptyShip" type="Node3D"]
-script = ExtResource("1_rmc1l")
-
-[node name="Attachments" type="Node" parent="."]

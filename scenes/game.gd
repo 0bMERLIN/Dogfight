@@ -7,7 +7,6 @@ var player_ship_info_CFG : Dictionary # id, .CFG
 
 @rpc("any_peer", "call_local", "reliable")
 func set_player_info(id: int, data_CFG: String):
-	print(id, " @ ", multiplayer.get_unique_id())
 	var config = ConfigFile.new()
 	config.parse(data_CFG)
 	player_ship_info_CFG[id] = config

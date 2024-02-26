@@ -53,7 +53,7 @@ spawn_path = NodePath("../Teams")
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 0
 offset_left = 335.0
-offset_top = 6.0
+offset_top = -7.0
 offset_right = 1157.0
 offset_bottom = 644.0
 
@@ -67,3 +67,4 @@ render_target_update_mode = 4
 
 [connection signal="pressed" from="StartButtons/ReadyButton" to="." method="_on_ready_button_pressed"]
 [connection signal="toggled" from="StartButtons/ReadyButton" to="." method="_on_ready_button_toggled"]
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

@@ -36,15 +36,14 @@ func add_player(id: int):
 	#Set the players idD
 	character.player_name = str(id)
 	$Teams/TeamList.add_player(character)
-
+	
 
 func del_player(id: int):
 	$Teams/TeamList.delete_player(id)
 
 
 func _exit_tree():
-	if not multiplayer.is_server():
-		return
+	if not multiplayer.is_server(): return
 	multiplayer.peer_connected.disconnect(add_player)
 	multiplayer.peer_disconnected.disconnect(del_player)
 
@@ -58,10 +57,12 @@ func _process(delta):
 	$StartButtons/StartCountdown.text = str(int(start_timer))
 	if multiplayer.is_server() && start_timer <= 0:
 		rootNode.change_world.call_deferred(load("res://scenes/world.tscn"))
-		
 
 
 func _on_ready_button_toggled(toggled_on):
 	$Teams/TeamList.set_ready.rpc(multiplayer.get_unique_id(), toggled_on)
-	#rootNode.set_player_info(multiplayer.get_unique_id(), hangar.get_current_ship_config().encode_to_text())
-	rootNode.set_player_info.rpc(multiplayer.get_unique_id(), hangar.get_current_ship_config().encode_to_text())
+	rootNode.set_player_info.rpc(multiplayer.get_unique_id(), hangar.ship_config.encode_to_text())
+
+
+func _on_multiplayer_spawner_spawned(node):
+	rootNode.set_player_info.rpc(multiplayer.get_unique_id(), hangar.ship_config.encode_to_text())	

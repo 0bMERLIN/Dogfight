@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0h77g1t42hvs"]
+
+[ext_resource type="Script" path="res://scenes/ship_config.gd" id="1_rkuog"]
+[ext_resource type="PackedScene" uid="uid://csyyn3a8ft0dw" path="res://scenes/AttachmentPoint.tscn" id="2_md4k3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wufw3"]
+
+[node name="TheCube" type="Node3D"]
+script = ExtResource("1_rkuog")
+
+[node name="AttachmentPoints" type="Node3D" parent="."]
+
+[node name="TopAttachmentPoint" type="Node3D" parent="AttachmentPoints"]
+
+[node name="Bingus" parent="AttachmentPoints/TopAttachmentPoint" instance=ExtResource("2_md4k3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6324, 0)
+
+[node name="Cubus" parent="AttachmentPoints/TopAttachmentPoint" instance=ExtResource("2_md4k3")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wufw3")

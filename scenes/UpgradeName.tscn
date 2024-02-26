@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://jgasiyxc7imx"]
+
+[ext_resource type="Script" path="res://scenes/UpgradeName.gd" id="1_t0adl"]
+
+[node name="UpgradeName" type="Control"]
+layout_mode = 3
+anchor_right = 0.174
+anchor_bottom = 0.082
+offset_right = -0.448013
+offset_bottom = -4.136
+script = ExtResource("1_t0adl")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+offset_right = 143.0
+offset_bottom = 48.0
+
+[node name="Buy" type="Button" parent="."]
+layout_mode = 2
+offset_left = 154.0
+offset_top = 6.0
+offset_right = 192.0
+offset_bottom = 37.0
+text = "Buy
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Buy" to="." method="_on_buy_pressed"]

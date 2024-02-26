@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://ktmxrd4lo1mv"]
+
+[ext_resource type="Script" path="res://scenes/attachments/Cubus.gd" id="1_opxuf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqusg"]
+shading_mode = 0
+albedo_color = Color(0.854902, 0, 0.356863, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o5b77"]
+material = SubResource("StandardMaterial3D_nqusg")
+
+[node name="Cubus" type="Node3D"]
+script = ExtResource("1_opxuf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_o5b77")

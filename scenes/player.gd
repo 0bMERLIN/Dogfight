@@ -33,7 +33,7 @@ func _ready():
 		$Hud/SubViewportContainer.hide()
 	$CamRoot/Camera.input = input
 	
-	var s = load(Ship_config.get_value("", "ship_scene")).instantiate()
+	var s = load(Ship_config.get_value(Ship_config.get_value("", "current_ship_name"), "ship_scene")).instantiate()
 	s.ship_config = Ship_config
 	add_child(s)
 	# Only process on server.

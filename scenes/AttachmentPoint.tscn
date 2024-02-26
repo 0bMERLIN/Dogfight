@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://csyyn3a8ft0dw"]
+
+[ext_resource type="Script" path="res://scenes/AttachmentPoint.gd" id="1_3cp2n"]
+[ext_resource type="SphereMesh" uid="uid://dmtbk36ee5mir" path="res://scenes/ships/sphere.tres" id="2_2on2b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yfkb1"]
+radius = 0.25
+
+[node name="AttachmentPoint" type="Area3D"]
+script = ExtResource("1_3cp2n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_yfkb1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_2on2b")
