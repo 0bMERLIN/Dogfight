@@ -1,25 +1,24 @@
 extends CanvasLayer
 
+
 class_name ui
 signal game_started
-@onready var end_of_game_screen =$End_of_game_screen
 @onready var setting_screen=$Setting_screen
 @onready var before_game_screen=$before_game_screen
-
+@onready var starting_game_screen=$starting_game_screen
+@onready var join_lobby_screen=$join_lobby_screen
 
 
 func _ready():
-	pass
-	
-func on_game_over():
-	end_of_game_screen.visible=true
-	
-func _on_restart_button_pressed():
-	get_tree().reload_current_scene()
+	if FileAccess.file_exists("user://save_IP.dat"):
+		var file=FileAccess.open("user://save_IP.dat", FileAccess.READ)
+		var savedIP=file.get_as_text()
+		$join_lobby_screen/CenterContainer/LineEdit.text=savedIP
 
 
 func _on_play_button_pressed():
-	game_started.emit()
+	starting_game_screen.visible=true
+	before_game_screen.visible=false
 
 
 
@@ -35,3 +34,27 @@ func _on_exit_settings_pressed():
 func _on_quit_button_pressed():
 	get_tree().quit()
 
+
+
+func _on_createlobby_button_pressed():
+	pass # Replace with function body.
+
+
+func _on_joinlobby_button_pressed():
+	join_lobby_screen.visible=true
+	starting_game_screen.visible=false
+
+
+func _on_exit_starting_pressed():
+	starting_game_screen.visible=false
+	before_game_screen.visible=true
+
+
+func _on_exit_join_lobby_pressed():
+	join_lobby_screen.visible=false
+	starting_game_screen.visible=true
+
+
+func _on_start_button_pressed():
+	var file=FileAccess.open("user://save_IP.dat", FileAccess.WRITE)
+	file.store_string($join_lobby_screen/CenterContainer/LineEdit.text)
