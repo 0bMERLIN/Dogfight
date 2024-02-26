@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://blje2bayyx8x2"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_1pi3t"]
-[ext_resource type="Texture2D" uid="uid://r6f3robh4gac" path="res://assets/texturify_pano-1-10.jpg" id="2_2bn84"]
+[ext_resource type="Texture2D" uid="uid://bh635prmybn62" path="res://assets/world/StarSky4.png" id="2_eeoxv"]
 [ext_resource type="PackedScene" uid="uid://bnb6p2cik2enw" path="res://assets/world/Space_Station.blend" id="3_aynq6"]
 [ext_resource type="PackedScene" uid="uid://bvx58k6nygwa" path="res://assets/world/Stein1.blend" id="4_8vq5q"]
 [ext_resource type="PackedScene" uid="uid://cl463xruxskyc" path="res://assets/world/Stein2.blend" id="5_soau8"]
@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://chqhkwvo7qslc" path="res://assets/world/Satelite.blend" id="8_2ith7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_s11q0"]
-panorama = ExtResource("2_2bn84")
+panorama = ExtResource("2_eeoxv")
 
 [sub_resource type="Sky" id="Sky_mlaso"]
 sky_material = SubResource("PanoramaSkyMaterial_s11q0")
@@ -19,6 +19,11 @@ radiance_size = 6
 [sub_resource type="Environment" id="Environment_8dm5x"]
 background_mode = 2
 sky = SubResource("Sky_mlaso")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.92
+ambient_light_energy = 0.51
+reflected_light_source = 2
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_1pi3t")
