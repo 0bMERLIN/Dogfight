@@ -39,11 +39,11 @@ func load_ship(ship_name):
 		$Ship.remove_child(n)
 	
 	$Ship.add_child(s)
-	$ShipName.text = ship_name
+	$BottomPanel/ShipName.text = ship_name
 	
 	# upgrade upgrade list
-	for n in $UpgradesContainer/Upgrades.get_children():
-		$UpgradesContainer/Upgrades.remove_child(n)
+	for n in $Sidebar/UpgradesContainer/Upgrades.get_children():
+		$Sidebar/UpgradesContainer/Upgrades.remove_child(n)
 	
 	for upgrade_name in ship_config.get_value("", "all_upgrades"):
 		var nm = preload("res://scenes/UpgradeName.tscn").instantiate()
@@ -51,7 +51,7 @@ func load_ship(ship_name):
 		nm.is_bought = upgrade_name in ship_config.get_value("", "upgrades")
 		nm.selected.connect(_on_upgrade_selected)
 		nm.bought.connect(_on_upgrade_bought)
-		$UpgradesContainer/Upgrades.add_child(nm)
+		$Sidebar/UpgradesContainer/Upgrades.add_child(nm)
 	
 	create_success_toast("Now editing ship: " + ship_name)
 
@@ -75,7 +75,7 @@ func _on_upgrade_bought(upgrade_name: String):
 
 func _on_upgrade_selected(upgrade_name: String):
 	selected_upgrade = upgrade_name
-	$SelectedUpgrade.text = selected_upgrade
+	$Sidebar/SelectedUpgrade.text = selected_upgrade
 
 func get_ship_names():
 	var ship_names = ship_config.get_sections()
@@ -91,20 +91,20 @@ func _input(event):
 		if ap == null: return
 		$Ship.get_child(0).map_attachments(func (x): x.set_selected(false))
 		ap.set_selected(true)
-		$AttachmentNodeMenu/SelectedAttachmentPoint.text = ap.get_parent().name
+		$Sidebar/AttachmentNodeMenu/SelectedAttachmentPoint.text = ap.get_parent().name
 		update_data_items()
 
 func update_data_items():
 	$Ship.get_child(0).map_attachment_points(
 		func (ap):
-			if ap.name == $AttachmentNodeMenu/SelectedAttachmentPoint.text:
+			if ap.name == $Sidebar/AttachmentNodeMenu/SelectedAttachmentPoint.text:
 				update_data_items_for(ap.get_child(0))
 	)
 
 func update_data_items_for(ap):
 	# clear upgrade data items
-	for c in $AttachmentNodeMenu/ScrollContainer/UpgradeData.get_children():
-		$AttachmentNodeMenu/ScrollContainer/UpgradeData.remove_child(c)
+	for c in $Sidebar/AttachmentNodeMenu/ScrollContainer/UpgradeData.get_children():
+		$Sidebar/AttachmentNodeMenu/ScrollContainer/UpgradeData.remove_child(c)
 	
 	# add new ones
 	var attachment = ap.get_active_attachment()
@@ -114,7 +114,7 @@ func update_data_items_for(ap):
 		data_item_node.nm = data_item
 		data_item_node.ap = attachment
 		data_item_node.on_buy.connect(_on_upgrade_data_item_buy)
-		$AttachmentNodeMenu/ScrollContainer/UpgradeData.add_child(data_item_node)
+		$Sidebar/AttachmentNodeMenu/ScrollContainer/UpgradeData.add_child(data_item_node)
 
 func deduct_credits(cost):
 	var credits = ship_config.get_value("", "credits")
@@ -137,15 +137,15 @@ func _on_upgrade_data_item_buy(upgrade_data_item):
 	
 	# update data item
 	$Ship.get_child(0).change_attachments(func (a):
-		a[$AttachmentNodeMenu/SelectedAttachmentPoint.text][1][upgrade_data_item.nm]["current"] += 1
+		a[$Sidebar/AttachmentNodeMenu/SelectedAttachmentPoint.text][1][upgrade_data_item.nm]["current"] += 1
 	)
 	upgrade_data_item.ap.update_cfg()
 	upgrade_data_item.update_ui()
 
 func _on_remove_attachment_pressed():
 	var s = $Ship.get_child(0)
-	if $AttachmentNodeMenu/SelectedAttachmentPoint.text != "" and s != null:
-		s.del_attachment($AttachmentNodeMenu/SelectedAttachmentPoint.text)
+	if $Sidebar/AttachmentNodeMenu/SelectedAttachmentPoint.text != "" and s != null:
+		s.del_attachment($Sidebar/AttachmentNodeMenu/SelectedAttachmentPoint.text)
 	update_data_items()
 
 func get_attachment_point_under_mouse() -> Node3D:
@@ -196,9 +196,9 @@ func create_success_toast(msg: String, duration_ms: int = 2000):
 	
 # add new upgrade/attachment
 func _on_selected_upgrade_pressed():
-	var ap = $AttachmentNodeMenu/SelectedAttachmentPoint.text
+	var ap = $Sidebar/AttachmentNodeMenu/SelectedAttachmentPoint.text
 	if ap == "": return
-	var selected_attachment_name = $SelectedUpgrade.text
+	var selected_attachment_name = $Sidebar/SelectedUpgrade.text
 	if selected_attachment_name == "": return
 	var conf = str_to_var(var_to_str(ship_config.get_value("", "upgrades")[selected_attachment_name]))
 	if not $Ship.get_child(0).add_attachment(ap, selected_attachment_name, conf):
@@ -209,11 +209,13 @@ func _on_selected_upgrade_pressed():
 
 func _on_new_ship_pressed():
 	$NewShipDialogue.show()
-	$NewShip.hide()
+	$BottomPanel/NewShip.hide()
 
 func _on_delete_ship_pressed():
-	if len(ship_config.get_sections()) <= 2: return
-	ship_config.erase_section($ShipName.text)
+	if len(ship_config.get_sections()) <= 2:
+		create_error_toast("You can't scrap your only ship!")
+		return
+	ship_config.erase_section($BottomPanel/ShipName.text)
 	_on_next_pressed()
 
 func _on_new_ship_dialogue_create_new_ship(name, data):
@@ -226,10 +228,10 @@ func _on_new_ship_dialogue_create_new_ship(name, data):
 	ship_config.set_value(name, "ship_scene", data["ship_scene"])
 	ship_config.set_value(name, "attachments", {})
 	$NewShipDialogue.hide()
-	$NewShip.show()
+	$BottomPanel/NewShip.show()
 	load_ship(name)
 	create_success_toast("You're now the proud owner of " + name + "!")
 
 func _on_new_ship_dialogue_cancel():
 	$NewShipDialogue.hide()
-	$NewShip.show()
+	$BottomPanel/NewShip.show()
