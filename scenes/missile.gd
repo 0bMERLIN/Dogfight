@@ -1,8 +1,8 @@
 extends Area3D
 
 @export var target : Node
-@export var speed : float = 60.0
-@export var maxTurnSpeed : float = 190.0  # Maximum turning speed in degrees per second
+@export var speed : float = 140.0
+@export var maxTurnSpeed : float = 210.0  # Maximum turning speed in degrees per second
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,7 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if target:
+	if target && $Animation.is_stopped():
 		# Calculate the direction vector towards the target
 		var dist = (target.global_transform.origin - global_transform.origin)
 		var dir = dist.normalized()
@@ -39,7 +39,8 @@ func _process(delta):
 
 
 func _on_timer_timeout():
-	queue_free()
+	if multiplayer.is_server():
+		queue_free()
 
 
 func _on_despawn_timeout():

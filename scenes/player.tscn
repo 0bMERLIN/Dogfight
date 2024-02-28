@@ -105,6 +105,10 @@ root_path = NodePath("../Sync")
 replication_config = SubResource("SceneReplicationConfig_ulg38")
 script = ExtResource("3_a2r12")
 
+[node name="Missiletimer" type="Timer" parent="Input"]
+wait_time = 10.0
+one_shot = true
+
 [node name="Sync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_cg8ge")
 
@@ -194,7 +198,6 @@ offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_t2slu")
-text = "11"
 
 [node name="RadarViewport" type="SubViewport" parent="Hud"]
 own_world_3d = true

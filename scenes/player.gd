@@ -1,8 +1,8 @@
 # player.gd
 extends CharacterBody3D
 
-@export var rot_acc = Vector3(0.015, 0.015, 0.04)
-@export var max_rot_vel = Vector3(0.015, 0.015, 0.03)
+@export var rot_acc = Vector3(0.02, 0.02, 0.04)
+@export var max_rot_vel = Vector3(0.025, 0.025, 0.03)
 @export var turn_camera_mode = false;
 @export var radar : PackedScene
 @export var hp_scene : PackedScene
@@ -120,6 +120,7 @@ func _physics_process(delta):
 		
 		if hitpoints <= 0:
 			dead = true
+			$DemoShip.hide()
 			$Overlays/EnemyMarker.hide()
 			if $CamRoot/Camera.current:
 				$Respawn.start()
@@ -133,6 +134,7 @@ func _physics_process(delta):
 			shoot()
 		
 		if(input.missile):
+			$Input.missile = false
 			if not multiplayer.is_server():
 				return
 			missile()
@@ -151,6 +153,7 @@ func missile():
 	m.transform = $BulletMuzzle.global_transform
 
 func hit(dmg):
+	print(dmg)
 	hitpoints -= dmg
 
 
@@ -160,3 +163,5 @@ func _on_respawn_timeout():
 		var pos := Vector2.from_angle(randf() * 2 * PI)
 		position = Vector3(pos.x * 3000 * randf(), 0, pos.y * 3000 * randf())
 		hitpoints = 100
+	dead = false
+	$DemoShip.show()

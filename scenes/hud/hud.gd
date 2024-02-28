@@ -1,7 +1,7 @@
 extends Control
 
-@export var limits = 200
-@export var deadzone = 15
+@export var limits = 350
+@export var deadzone = 20
 @export var dir : Vector2
 
 var paused = true

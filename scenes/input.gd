@@ -2,12 +2,14 @@
 extends MultiplayerSynchronizer
 
 #Syncronize properties
-@export var rotation_speeds := Vector3()
-@export var speed := 0.0
+@export var input_dir := Vector3()
+@export var speed := 10.0
 @export var firering := false
 @export var missile := false
 @export var Target : String
-var input_dir = Vector3()
+@export var acceleration:= 2
+@export var deAcceleration:= 0.5
+@export var maxSpeed:= 200
 
 @onready var cursor = get_parent().get_node("Hud/Hud")
 
@@ -29,7 +31,17 @@ func _process(delta):
 	if Input.is_action_pressed("game_d") || Input.is_action_pressed("game_a"):
 		input_dir.z = Input.get_action_strength("game_d")-Input.get_action_strength("game_a")
 	
-	speed += (Input.get_action_strength("game_w")-Input.get_action_strength("game_s"))*delta*50
+	if Input.is_action_pressed("game_w") && speed<maxSpeed :
+		speed+=acceleration
+	elif speed>0:
+		speed-=deAcceleration
+		
+	if Input.is_action_pressed("game_s"):
+		speed-=acceleration
+	##speed += (Input.get_action_strength("game_w")-Input.get_action_strength("game_s"))*delta*50
 	
 	firering = Input.is_action_pressed("ui_accept")
-	missile = Input.is_action_just_pressed("ui_focus_next")
+	if Input.is_action_pressed("ui_focus_next") && $Missiletimer.is_stopped():
+		missile = true
+		$Missiletimer.start()
+
