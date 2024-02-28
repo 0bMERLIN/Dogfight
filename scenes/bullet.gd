@@ -8,9 +8,16 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var forward_dir = global_transform.basis.z.normalized()
-	global_translate(forward_dir * 70 * delta)
+	global_translate(forward_dir * 800 * delta)
 
 
 func _on_timer_timeout():
 	if(multiplayer.is_server()):
+		queue_free()
+
+
+func _on_body_entered(body):
+	if multiplayer.is_server():
+		print("Hit: ", body)
+		body.hit(1)
 		queue_free()

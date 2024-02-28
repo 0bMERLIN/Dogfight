@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci4yj21rug85p"]
+
+[ext_resource type="Script" path="res://scenes/hud/radar_enemy.gd" id="1_a63vn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5h6a1"]
+shading_mode = 0
+albedo_color = Color(1, 0.231373, 0.0666667, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_l1v15"]
+material = SubResource("StandardMaterial3D_5h6a1")
+
+[node name="RadarEnemy" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_l1v15")
+script = ExtResource("1_a63vn")
