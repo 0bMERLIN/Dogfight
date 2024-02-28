@@ -1,11 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://blje2bayyx8x2"]
+[gd_scene load_steps=12 format=3 uid="uid://blje2bayyx8x2"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_1pi3t"]
-[ext_resource type="Texture2D" uid="uid://cjfncepf3diik" path="res://assets/skybox.jpeg" id="2_bmhps"]
-[ext_resource type="PackedScene" uid="uid://yfs8xyfv7wtq" path="res://assets/ships/Middle_Space_Ship.blend" id="3_gf4r1"]
+[ext_resource type="Texture2D" uid="uid://d0ql4m3nch2y1" path="res://assets/world/StarSky3.png" id="2_8fl0v"]
+[ext_resource type="PackedScene" uid="uid://bnb6p2cik2enw" path="res://assets/world/Space_Station.blend" id="3_aynq6"]
+[ext_resource type="PackedScene" uid="uid://bvx58k6nygwa" path="res://assets/world/Stein1.blend" id="4_8vq5q"]
+[ext_resource type="PackedScene" uid="uid://cl463xruxskyc" path="res://assets/world/Stein2.blend" id="5_soau8"]
+[ext_resource type="PackedScene" uid="uid://dxcbscqjtkw6p" path="res://assets/world/SteinGroß.blend" id="6_ykx8r"]
+[ext_resource type="PackedScene" uid="uid://cxpothjtwy6ik" path="res://assets/world/SteinLang.blend" id="7_7u4mt"]
+[ext_resource type="PackedScene" uid="uid://chqhkwvo7qslc" path="res://assets/world/Satelite.blend" id="8_2ith7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_s11q0"]
-panorama = ExtResource("2_bmhps")
+panorama = ExtResource("2_8fl0v")
 
 [sub_resource type="Sky" id="Sky_mlaso"]
 sky_material = SubResource("PanoramaSkyMaterial_s11q0")
@@ -14,6 +19,11 @@ radiance_size = 6
 [sub_resource type="Environment" id="Environment_8dm5x"]
 background_mode = 2
 sky = SubResource("Sky_mlaso")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.92
+ambient_light_energy = 0.51
+reflected_light_source = 2
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_1pi3t")
@@ -34,5 +44,77 @@ environment = SubResource("Environment_8dm5x")
 _spawnable_scenes = PackedStringArray("res://scenes/bullet.tscn", "res://scenes/missile.tscn")
 spawn_path = NodePath("../Bullets")
 
-[node name="Middle_Space_Ship" parent="." instance=ExtResource("3_gf4r1")]
-transform = Transform3D(56.6703, 0, 0, 0, 56.6703, 0, 0, 0, 56.6703, 0, 0, 0)
+[node name="Space_Station" parent="." instance=ExtResource("3_aynq6")]
+transform = Transform3D(31.1399, 0, 0, 0, 31.1399, 0, 0, 0, 31.1399, 16.9778, 32.4547, 769.064)
+
+[node name="Stein1" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 20.1573, 0, 0, 0, 20.1573, 208.933, 191.264, -868.467)
+
+[node name="Stein6" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 20.1573, 0, 0, 0, 20.1573, 1362.8, 575.437, -2685.52)
+
+[node name="Stein8" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 20.1573, 0, 0, 0, 20.1573, 1709.57, -43.7563, -2685.52)
+
+[node name="Stein9" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 20.1573, 0, 0, 0, 20.1573, 1113.19, -410.061, -3018.86)
+
+[node name="Stein10" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, -20.146, -0.674646, 0, 0.674646, -20.146, 1081.87, 140.045, -3380.73)
+
+[node name="Stein11" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1557, 0.25189, 0, -0.25189, 20.1557, 0, 0, 0, 20.1573, 2454.25, 271.347, -2322.29)
+
+[node name="Stein12" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 20.1573, 0, 0, 0, 20.1573, 657.95, 140.045, -2685.52)
+
+[node name="Stein7" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 11.0141, -16.8821, 0, 16.8821, 11.0141, 1433.32, 263.499, -3289.04)
+
+[node name="Stein5" parent="." instance=ExtResource("4_8vq5q")]
+transform = Transform3D(20.1573, 0, 0, 0, 0.676407, 20.1459, 0, -20.1459, 0.676407, 867.211, -1145.03, -96.4886)
+
+[node name="Stein2" parent="." instance=ExtResource("5_soau8")]
+transform = Transform3D(25.7773, 32.9555, 0, -32.9555, 25.7773, 0, 0, 0, 41.8394, 482.719, -62.2668, 1950)
+
+[node name="Stein14" parent="." instance=ExtResource("5_soau8")]
+transform = Transform3D(25.7773, 32.9555, 0, -32.9555, 25.7773, 0, 0, 0, 41.8394, -1002.92, 129.948, 1020.55)
+
+[node name="Stein3" parent="." instance=ExtResource("5_soau8")]
+transform = Transform3D(25.7773, 32.9555, 0, -32.9555, 25.7773, 0, 0, 0, 41.8394, 1238.31, 151.755, -264.096)
+
+[node name="Stein13" parent="." instance=ExtResource("5_soau8")]
+transform = Transform3D(25.7773, 32.9555, 0, -32.9555, 25.7773, 0, 0, 0, 41.8394, 1238.31, -63.238, 1020.55)
+
+[node name="Stein4" parent="." instance=ExtResource("5_soau8")]
+transform = Transform3D(25.7773, 32.9555, 0, -6.66438, 5.21278, 40.975, 32.2747, -25.2448, 8.46091, 866.746, 487.374, 1518.86)
+
+[node name="SteinGroß" parent="." instance=ExtResource("6_ykx8r")]
+transform = Transform3D(31.3489, 0, 0, 0, 31.3489, 0, 0, 0, 31.3489, -919.176, 259.38, -461.376)
+
+[node name="SteinGroß3" parent="." instance=ExtResource("6_ykx8r")]
+transform = Transform3D(31.3489, 0, 0, 0, 5.25445, -30.9054, 0, 30.9054, 5.25445, -919.176, -286.415, -1979.96)
+
+[node name="SteinGroß2" parent="." instance=ExtResource("6_ykx8r")]
+transform = Transform3D(99.5116, 0, 0, 0, 62.5626, 77.3853, 0, -77.3853, 62.5626, 1154.27, 259.38, -2828.79)
+
+[node name="SteinLang" parent="." instance=ExtResource("7_7u4mt")]
+transform = Transform3D(36.814, 0, 0, 0, 36.814, 0, 0, 0, 36.814, -430.351, -646.231, 1383.44)
+
+[node name="SteinLang3" parent="." instance=ExtResource("7_7u4mt")]
+transform = Transform3D(36.814, 0, 0, 0, 27.1859, -24.8233, 0, 24.8233, 27.1859, -430.351, -1016.42, 121.943)
+
+[node name="SteinLang2" parent="." instance=ExtResource("7_7u4mt")]
+transform = Transform3D(30.6827, 20.3431, 0, -19.3046, 29.1164, 11.6118, 6.41656, -9.67785, 34.9347, 1106.66, 96.5911, -2365.72)
+
+[node name="Satelite" parent="." instance=ExtResource("8_2ith7")]
+transform = Transform3D(4.79051, 0.392728, 2.39696, 0.138525, 5.24761, -1.13664, -2.42496, 1.0756, 4.67025, -1307.28, 436.723, -1249.29)
+
+[node name="Satelite2" parent="." instance=ExtResource("8_2ith7")]
+transform = Transform3D(4.80492, 0.401416, -2.36647, 0.193715, 5.21332, 1.27764, 2.39245, -1.22831, 4.6493, 1183.34, -974.707, -1249.29)
+
+[node name="Satelite4" parent="." instance=ExtResource("8_2ith7")]
+transform = Transform3D(4.52686, 0.52829, -2.84201, 0.193715, 5.21332, 1.27764, 2.8842, -1.17932, 4.37483, 1773.75, 199.361, -2987.25)
+
+[node name="Satelite3" parent="." instance=ExtResource("8_2ith7")]
+transform = Transform3D(-4.70886, 0.778707, -2.4635, 0.193716, 5.21332, 1.27764, 2.57638, 1.03126, -4.59863, 146.985, -279.47, 3048.3)
