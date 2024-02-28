@@ -10,5 +10,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if !is_instance_valid(player):
+		queue_free()
+		return
 	position = (player.position - reference.position) / 100
 	

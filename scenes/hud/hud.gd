@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 @export var limits = 200
 @export var deadzone = 15

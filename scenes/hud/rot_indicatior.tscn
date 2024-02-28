@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://byqwqp0uvfdnu"]
+
+[ext_resource type="Texture2D" uid="uid://bk3p4gxue0gbi" path="res://assets/navball_crosshair.png" id="1_30xhr"]
+
+[node name="RotIndicatior" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 967.0
+offset_bottom = 968.0
+scale = Vector2(0.1, 0.1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -970.0
+offset_top = -970.0
+offset_right = -2.99988
+offset_bottom = -1.99988
+scale = Vector2(2, 2)
+texture = ExtResource("1_30xhr")

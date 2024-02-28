@@ -6,6 +6,9 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pass
+			
+func update_players():
 	for player in players_scene.get_children():
 		if player != main_player:
 			var playerpoint = enemy_marker.instantiate()
@@ -17,3 +20,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$Reference.global_rotation = main_player.global_rotation
+
+
+func _on_timer_timeout():
+	update_players()
