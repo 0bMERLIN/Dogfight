@@ -1,11 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cr372ajk4eddc"]
+[gd_scene load_steps=5 format=3 uid="uid://ovkntav0jvnu"]
 
 [ext_resource type="Script" path="res://scenes/hud/health_bar.gd" id="1_o18vd"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fme7i"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ttly"]
-bg_color = Color(0.388235, 0.666667, 0.572549, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtjjk"]
+bg_color = Color(0.137255, 1, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2feyu"]
 bg_color = Color(0, 0, 0, 1)
@@ -16,35 +14,52 @@ expand_margin_bottom = 1.0
 shadow_color = Color(0, 0, 0, 0.27451)
 shadow_offset = Vector2(0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtjjk"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sonlq"]
+bg_color = Color(1, 1, 0.968627, 1)
 
-[node name="HealthBar" type="ProgressBar"]
-z_index = 1
-offset_right = 240.0
-offset_bottom = 4.0
-theme_override_styles/background = SubResource("StyleBoxEmpty_fme7i")
-theme_override_styles/fill = SubResource("StyleBoxFlat_6ttly")
-value = 30.0
-show_percentage = false
+[node name="HealthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 3.0
+offset_top = -9.0
+offset_right = 515.0
+offset_bottom = 503.0
 script = ExtResource("1_o18vd")
 
-[node name="DamegeBar" type="ProgressBar" parent="."]
-z_index = -1
+[node name="Hp" type="ProgressBar" parent="."]
+z_index = 1
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -2.0
+offset_right = 512.0
+offset_bottom = 28.0
 grow_vertical = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_2feyu")
+theme_override_colors/font_color = Color(0, 0.588235, 0, 1)
 theme_override_styles/fill = SubResource("StyleBoxFlat_jtjjk")
-value = 50.0
+value = 100.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="DamegeBar"]
+[node name="DamageBar" type="ProgressBar" parent="Hp"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -15.0
+offset_right = 512.0
+offset_bottom = 15.0
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_2feyu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_sonlq")
+min_value = 1.0
+value = 100.0
+exp_edit = true
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
 
-[connection signal="timeout" from="DamegeBar/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

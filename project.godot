@@ -21,7 +21,8 @@ window/stretch/mode="viewport"
 
 [dotnet]
 
-project/assembly_name="Dogfight"
+window/stretch/mode="viewport"
+window/stretch/aspect="ignore"
 
 [input]
 

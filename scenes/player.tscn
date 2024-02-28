@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c8koycu85ebae"]
+[gd_scene load_steps=27 format=3 uid="uid://c8koycu85ebae"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
 [ext_resource type="PackedScene" uid="uid://cr8dkc1wogfue" path="res://scenes/hud/radar.tscn" id="2_ak20a"]
@@ -7,10 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://ovmwcyo8xlke" path="res://scenes/bullet.tscn" id="5_5kv62"]
 [ext_resource type="Texture2D" uid="uid://dnk41lrppqiy7" path="res://assets/target_overlay.png" id="6_mq0t7"]
 [ext_resource type="PackedScene" uid="uid://ped4jqinp4y2" path="res://scenes/ship_controls.tscn" id="7_tcrqv"]
-[ext_resource type="Texture2D" uid="uid://bk3p4gxue0gbi" path="res://assets/navball_crosshair.png" id="8_fxt0k"]
-[ext_resource type="Script" path="res://scenes/navball_rotation_indicator.gd" id="9_221bg"]
+[ext_resource type="PackedScene" uid="uid://byqwqp0uvfdnu" path="res://scenes/hud/rot_indicatior.tscn" id="10_6g1oq"]
 [ext_resource type="PackedScene" uid="uid://bqncyxpelpdbx" path="res://scenes/hud/hud.tscn" id="11_8m584"]
+[ext_resource type="Script" path="res://scenes/hud/navball_rotation_indicator.gd" id="11_ewwsq"]
 [ext_resource type="Texture2D" uid="uid://boi0x4ijf7loj" path="res://assets/hud/enemymarker.png" id="11_se6ka"]
+[ext_resource type="PackedScene" uid="uid://ovkntav0jvnu" path="res://scenes/hud/health_bar.tscn" id="12_w0yq6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6kyf5"]
 radius = 5.011
@@ -47,12 +48,12 @@ properties/3/path = NodePath(".:hitpoints")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[sub_resource type="World3D" id="World3D_8pxdk"]
-
 [sub_resource type="World3D" id="World3D_xv7od"]
 
+[sub_resource type="World3D" id="World3D_8pxdk"]
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_y8xnl"]
-viewport_path = NodePath("Hud/SubViewportContainer/SubViewport")
+viewport_path = NodePath("Hud/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buq0p"]
 resource_local_to_scene = true
@@ -75,9 +76,21 @@ albedo_texture = SubResource("ViewportTexture_pfw3r")
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_nuuhf")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ck878"]
+viewport_path = NodePath("Hud/HpViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cii68"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_ck878")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_56p7g"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_cii68")
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_ukpfr")
 radar = ExtResource("2_ak20a")
+hp_scene = ExtResource("12_w0yq6")
 Bullet = ExtResource("5_5kv62")
 Missile = ExtResource("3_y2kfx")
 
@@ -104,7 +117,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.164713, 18.9041)
 
 [node name="Hud" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TargetRect" type="TextureRect" parent="Hud"]
 layout_mode = 0
@@ -115,12 +132,35 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_mq0t7")
 metadata/_edit_use_anchors_ = true
 
-[node name="NavballRotationIndicator" type="Sprite2D" parent="Hud" node_paths=PackedStringArray("player")]
-position = Vector2(599, 578)
-scale = Vector2(0.0828595, 0.0828595)
-texture = ExtResource("8_fxt0k")
-script = ExtResource("9_221bg")
-player = NodePath("../..")
+[node name="SubViewport" type="SubViewport" parent="Hud"]
+own_world_3d = true
+world_3d = SubResource("World3D_xv7od")
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="ShipControls" parent="Hud/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("7_tcrqv")]
+player = NodePath("../../..")
+
+[node name="Control" type="Control" parent="Hud/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RotIndicatior" parent="Hud/SubViewport/Control" instance=ExtResource("10_6g1oq")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.18, 0.18)
+script = ExtResource("11_ewwsq")
 
 [node name="PreTargetRect" type="TextureRect" parent="Hud"]
 layout_mode = 0
@@ -132,6 +172,12 @@ texture = ExtResource("6_mq0t7")
 metadata/_edit_use_anchors_ = true
 
 [node name="Hud" parent="Hud" instance=ExtResource("11_8m584")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [node name="Hp" type="Label" parent="Hud"]
 layout_mode = 0
@@ -143,20 +189,10 @@ own_world_3d = true
 world_3d = SubResource("World3D_8pxdk")
 transparent_bg = true
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Hud"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SubViewport" type="SubViewport" parent="Hud/SubViewportContainer"]
+[node name="HpViewport" type="SubViewport" parent="Hud"]
 own_world_3d = true
-world_3d = SubResource("World3D_xv7od")
+world_3d = SubResource("World3D_8pxdk")
 transparent_bg = true
-handle_input_locally = false
-render_target_update_mode = 4
-
-[node name="ShipControls" parent="Hud/SubViewportContainer/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("7_tcrqv")]
-player = NodePath("../../../..")
 
 [node name="Overlays" type="Control" parent="."]
 layout_mode = 3
@@ -174,13 +210,19 @@ metadata/_edit_use_anchors_ = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84027, 10.2682)
+visible = false
 light_energy = 0.515
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="NavBallMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.2, -1.74846e-08, 7.64274e-16, -1.2044e-08, 0.137767, -0.144984, 1.26749e-08, -0.144984, -0.137767, 0, 0.106577, 11.7393)
 mesh = SubResource("PlaneMesh_1ta4k")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="RadarMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.2, -1.74846e-08, 1.52733e-15, -4.97495e-09, 0.0569065, -0.191734, 1.67619e-08, -0.191734, -0.0569065, 0.463603, 0.263822, 11.597)
 mesh = SubResource("PlaneMesh_ovqcv")
-skeleton = NodePath("../MeshInstance3D")
+skeleton = NodePath("../NavBallMesh")
+
+[node name="HpMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.2, -3.42467e-08, -4.97493e-09, -4.97495e-09, 0.0569065, -0.191734, 3.42466e-08, -0.191734, -0.0569065, -0.48673, 0.263822, 11.597)
+mesh = SubResource("PlaneMesh_56p7g")
+skeleton = NodePath("../NavBallMesh")

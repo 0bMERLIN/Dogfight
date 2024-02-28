@@ -5,6 +5,7 @@ extends CharacterBody3D
 @export var max_rot_vel = Vector3(0.015, 0.015, 0.03)
 @export var turn_camera_mode = false;
 @export var radar : PackedScene
+@export var hp_scene : PackedScene
 
 var rot_vel = Vector3()
 
@@ -39,9 +40,11 @@ func _ready():
 		$CamRoot/Camera.current = true
 		var radar_scene = radar.instantiate()
 		radar_scene.players_scene = get_tree().get_root().get_node("Game/World/World/Players")
-		print(radar_scene.players_scene.get_children())
 		radar_scene.main_player = self
 		$Hud/RadarViewport.add_child(radar_scene)
+		var hp_scene = hp_scene.instantiate()
+		hp_scene.player = self
+		$Hud/HpViewport.add_child(hp_scene)
 	else:
 		$Hud/SubViewportContainer.hide()
 	$CamRoot/Camera.input = input
@@ -93,7 +96,7 @@ func _physics_process(delta):
 					target.get_node("Overlays/EnemyMarker").show()
 					target.get_node("Overlays/EnemyMarker").position = targetCamPos - Vector2(7, 7)
 					
-					var targetDist = ($Hud/Hud/Control/Crosshair.position - targetCamPos).length()
+					var targetDist = ($Hud/Hud.position - targetCamPos).length()
 					if targetDist < closestTargetDist:
 						closestTargetDist = targetDist
 						closestTarget = target

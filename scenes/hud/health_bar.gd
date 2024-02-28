@@ -1,26 +1,24 @@
-extends ProgressBar
+extends Control
 
+@export var player : Node
 
 @onready var timer = $Timer
-@onready var damage_bar = $DamageBar
+@onready var damage_bar = $Hp/DamageBar
 
+@export var max_value = 100
+@export var value = 100
 
 var health = 0 : set = _set_health
-
 
 func _set_health(new_health):
 	var prev_health = health
 	health = min(max_value, new_health)
-	value = health
+	$Hp.value = health
 	
-	if health <= 0:
-		queue_free()
-	
-	if health <prev_health:
+	if health < prev_health:
 		timer.start()
 	else:
 		damage_bar.value = health 
-
 
 func init_health(_health):
 	health = _health
@@ -31,3 +29,6 @@ func init_health(_health):
 
 func _on_timer_timeout():
 	damage_bar.value = health
+	
+func _physics_process(delta):
+	health = player.hitpoints
