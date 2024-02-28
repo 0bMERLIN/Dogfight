@@ -1,8 +1,9 @@
-extends CanvasLayer
+extends Control
 
 
 class_name ui
-signal game_started
+signal _on_host_pressed
+signal _on_connect_pressed
 @onready var setting_screen=$Setting_screen
 @onready var before_game_screen=$before_game_screen
 @onready var starting_game_screen=$starting_game_screen
@@ -20,8 +21,6 @@ func _on_play_button_pressed():
 	starting_game_screen.visible=true
 	before_game_screen.visible=false
 
-
-
 func _on_settings_button_pressed():
 	setting_screen.visible=true
 	before_game_screen.visible=false
@@ -37,7 +36,7 @@ func _on_quit_button_pressed():
 
 
 func _on_createlobby_button_pressed():
-	pass # Replace with function body.
+	_on_host_pressed.emit()
 
 
 func _on_joinlobby_button_pressed():
@@ -58,3 +57,4 @@ func _on_exit_join_lobby_pressed():
 func _on_start_button_pressed():
 	var file=FileAccess.open("user://save_IP.dat", FileAccess.WRITE)
 	file.store_string($join_lobby_screen/CenterContainer/LineEdit.text)
+	_on_connect_pressed.emit($join_lobby_screen/CenterContainer/LineEdit.text)

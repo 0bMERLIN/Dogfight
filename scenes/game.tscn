@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcvnr7fsqmao7"]
+[gd_scene load_steps=3 format=3 uid="uid://dcvnr7fsqmao7"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_r6yre"]
+[ext_resource type="PackedScene" uid="uid://j6leib5b35oo" path="res://scenes/ui.tscn" id="2_n2e37"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_r6yre")
+
+[node name="UI" parent="." instance=ExtResource("2_n2e37")]
+process_mode = 3
 
 [node name="World" type="Node" parent="."]
 
@@ -12,31 +16,5 @@ _spawnable_scenes = PackedStringArray("res://scenes/world.tscn", "res://scenes/l
 spawn_path = NodePath("../World")
 spawn_limit = 1
 
-[node name="UI" type="Control" parent="."]
-process_mode = 3
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Menu" type="HBoxContainer" parent="UI"]
-layout_mode = 2
-offset_right = 202.0
-offset_bottom = 31.0
-
-[node name="Host" type="Button" parent="UI/Menu"]
-layout_mode = 2
-text = "Host"
-
-[node name="Connect" type="Button" parent="UI/Menu"]
-layout_mode = 2
-text = "Connect"
-
-[node name="Ip" type="LineEdit" parent="UI/Menu"]
-layout_mode = 2
-text = "127.0.0.1"
-placeholder_text = "Ip"
-expand_to_text_length = true
-
-[connection signal="pressed" from="UI/Menu/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="UI/Menu/Connect" to="." method="_on_connect_pressed"]
+[connection signal="_on_connect_pressed" from="UI" to="." method="_on_connect_pressed"]
+[connection signal="_on_host_pressed" from="UI" to="." method="_on_host_pressed"]

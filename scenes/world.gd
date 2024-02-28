@@ -5,6 +5,7 @@ extends Node3D
 const RANDOM_SPAWN_RADIUS := 5.0
 
 func _ready():
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	#Only spawn players as the server
 	if not multiplayer.is_server():
 		return

@@ -30,9 +30,8 @@ func _on_host_pressed():
 	start_lobby()
 
 
-func _on_connect_pressed():
+func _on_connect_pressed(txt):
 	#Start the client
-	var txt : String = $UI/Menu/Ip.text
 	if txt == "":
 		OS.alert("Need a remote to connect to.")
 		return

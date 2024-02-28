@@ -86,7 +86,7 @@ func _physics_process(delta):
 					target.get_node("Overlays/EnemyMarker").show()
 					target.get_node("Overlays/EnemyMarker").position = targetCamPos - Vector2(7, 7)
 					
-					var targetDist = ($Hud/Hud/Control/Crosshair.position - targetCamPos).length()
+					var targetDist = ($Hud/Hud.position - targetCamPos).length()
 					if targetDist < closestTargetDist:
 						closestTargetDist = targetDist
 						closestTarget = target

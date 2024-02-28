@@ -17,7 +17,6 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 
@@ -53,5 +52,4 @@ game_c={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
