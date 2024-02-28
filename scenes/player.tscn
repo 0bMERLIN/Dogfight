@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c8koycu85ebae"]
+[gd_scene load_steps=28 format=3 uid="uid://c8koycu85ebae"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ukpfr"]
 [ext_resource type="PackedScene" uid="uid://cr8dkc1wogfue" path="res://scenes/hud/radar.tscn" id="2_ak20a"]
@@ -49,6 +49,8 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [sub_resource type="World3D" id="World3D_xv7od"]
+
+[sub_resource type="Theme" id="Theme_t2slu"]
 
 [sub_resource type="World3D" id="World3D_8pxdk"]
 
@@ -179,10 +181,20 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 
-[node name="Hp" type="Label" parent="Hud"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Respawn" type="Label" parent="Hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -11.0
+offset_right = 1.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_t2slu")
+text = "11"
 
 [node name="RadarViewport" type="SubViewport" parent="Hud"]
 own_world_3d = true
@@ -226,3 +238,9 @@ skeleton = NodePath("../NavBallMesh")
 transform = Transform3D(-0.2, -3.42467e-08, -4.97493e-09, -4.97495e-09, 0.0569065, -0.191734, 3.42466e-08, -0.191734, -0.0569065, -0.48673, 0.263822, 11.597)
 mesh = SubResource("PlaneMesh_56p7g")
 skeleton = NodePath("../NavBallMesh")
+
+[node name="Respawn" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Respawn" to="." method="_on_respawn_timeout"]

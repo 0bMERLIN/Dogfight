@@ -2,7 +2,7 @@ extends Node3D
 
 var rootNode : Node
 
-const RANDOM_SPAWN_RADIUS := 5.0
+const RANDOM_SPAWN_RADIUS := 3000.0
 
 func _ready():
 	rootNode = get_parent().get_parent()

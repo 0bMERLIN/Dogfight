@@ -31,6 +31,8 @@ var lockOnTimer
 var Ship_config : ConfigFile
 @export var hitpoints = 100
 
+var dead = false
+
 func _ready():
 	var rootNode = get_tree().root.get_child(0)
 	Ship_config = rootNode.player_ship_info_CFG[player]
@@ -61,77 +63,81 @@ func _ready():
 
 
 func _physics_process(delta):
-	var target_rot_vel = $Input.input_dir*max_rot_vel
-	
-	rot_vel.x += -rot_vel.x if target_rot_vel.x == 0 && abs(rot_vel.x) < 0.0002 else sign(target_rot_vel.x-rot_vel.x)*rot_acc.x*delta
-	rot_vel.y += -rot_vel.y if target_rot_vel.y == 0 && abs(rot_vel.y) < 0.0003 else sign(target_rot_vel.y-rot_vel.y)*rot_acc.y*delta
-	rot_vel.z += -rot_vel.z if target_rot_vel.z == 0 && abs(rot_vel.z) < 0.0003 else sign(target_rot_vel.z-rot_vel.z)*rot_acc.z*delta
-	
-	
-	rotate(transform.basis.x.normalized(), rot_vel.x)
-	rotate(transform.basis.y.normalized(), rot_vel.y)
-	rotate(transform.basis.z.normalized(), rot_vel.z)
-	if turn_camera_mode:
-		if Input.is_action_pressed("game_c"):
-			$CamRoot.rotation.y=PI
-		else:
-			$CamRoot.rotation.y=0
-	else:	
-		if Input.is_action_just_pressed("game_c"):
-			$CamRoot.rotation.y=PI if $CamRoot.rotation.y == 0 else 0
-			
-	global_translate(transform.basis.z*delta*$Input.speed)
-	
-	
-	$Hud/TargetRect.hide()
-	$Hud/PreTargetRect.hide()
-	if $CamRoot/Camera.current:
-		var closestTarget = null
-		var closestTargetDist = INF
-		for target in get_parent().get_children():
-			if target != self:
-				if !$CamRoot/Camera.is_position_behind(target.global_position):
-					var targetCamPos = $CamRoot/Camera.unproject_position(target.global_position)
-					target.get_node("Overlays/EnemyMarker").show()
-					target.get_node("Overlays/EnemyMarker").position = targetCamPos - Vector2(7, 7)
-					
-					var targetDist = ($Hud/Hud.position - targetCamPos).length()
-					if targetDist < closestTargetDist:
-						closestTargetDist = targetDist
-						closestTarget = target
-					if target.name == $Input.Target:
-						$Hud/TargetRect.show()
-						$Hud/TargetRect.modulate.a = 1
-						$Hud/TargetRect.position = $CamRoot/Camera.unproject_position(target.global_position) - Vector2(0, 16)
-					
-		if closestTarget != null:
-			if closestTargetDist < lockOnRange:
-				lockOnTimer += delta
-				$Hud/PreTargetRect.show()
-				$Hud/PreTargetRect.modulate.a = lockOnTimer/lockOnTime
-				$Hud/PreTargetRect.position = $CamRoot/Camera.unproject_position(closestTarget.global_position) - Vector2(0, 16)
-				if lockOnTimer >= lockOnTime:
-					$Input.Target = closestTarget.name
+	if !dead:
+		var target_rot_vel = $Input.input_dir*max_rot_vel
+		
+		rot_vel.x += -rot_vel.x if target_rot_vel.x == 0 && abs(rot_vel.x) < 0.0002 else sign(target_rot_vel.x-rot_vel.x)*rot_acc.x*delta
+		rot_vel.y += -rot_vel.y if target_rot_vel.y == 0 && abs(rot_vel.y) < 0.0003 else sign(target_rot_vel.y-rot_vel.y)*rot_acc.y*delta
+		rot_vel.z += -rot_vel.z if target_rot_vel.z == 0 && abs(rot_vel.z) < 0.0003 else sign(target_rot_vel.z-rot_vel.z)*rot_acc.z*delta
+		
+		
+		rotate(transform.basis.x.normalized(), rot_vel.x)
+		rotate(transform.basis.y.normalized(), rot_vel.y)
+		rotate(transform.basis.z.normalized(), rot_vel.z)
+		if turn_camera_mode:
+			if Input.is_action_pressed("game_c"):
+				$CamRoot.rotation.y=PI
 			else:
-				lockOnTimer = 0
-	
-	$Hud/Hp.text = str(hitpoints)
-	
-	if hitpoints <= 0:
-		$Overlays/EnemyMarker.hide()
-		if multiplayer.is_server():
-			position = Vector3(0, 0, 0)
-			hitpoints = 100
-	
-	if(input.firering):
-		if not multiplayer.is_server():
-			return
-		shoot()
-	
-	if(input.missile):
-		if not multiplayer.is_server():
-			return
-		missile()
+				$CamRoot.rotation.y=0
+		else:	
+			if Input.is_action_just_pressed("game_c"):
+				$CamRoot.rotation.y=PI if $CamRoot.rotation.y == 0 else 0
+				
+		global_translate(transform.basis.z*delta*$Input.speed)
+		
+		
+		$Hud/TargetRect.hide()
+		$Hud/PreTargetRect.hide()
+		if $CamRoot/Camera.current:
+			var closestTarget = null
+			var closestTargetDist = INF
+			for target in get_parent().get_children():
+				if target != self:
+					if !$CamRoot/Camera.is_position_behind(target.global_position):
+						var targetCamPos = $CamRoot/Camera.unproject_position(target.global_position)
+						target.get_node("Overlays/EnemyMarker").show()
+						target.get_node("Overlays/EnemyMarker").position = targetCamPos - Vector2(7, 7)
+						
+						var targetDist = ($Hud/Hud.position - targetCamPos).length()
+						if targetDist < closestTargetDist:
+							closestTargetDist = targetDist
+							closestTarget = target
+						if target.name == $Input.Target:
+							$Hud/TargetRect.show()
+							$Hud/TargetRect.modulate.a = 1
+							$Hud/TargetRect.position = $CamRoot/Camera.unproject_position(target.global_position) - Vector2(0, 16)
+						
+			if closestTarget != null:
+				if closestTargetDist < lockOnRange:
+					lockOnTimer += delta
+					$Hud/PreTargetRect.show()
+					$Hud/PreTargetRect.modulate.a = lockOnTimer/lockOnTime
+					$Hud/PreTargetRect.position = $CamRoot/Camera.unproject_position(closestTarget.global_position) - Vector2(0, 16)
+					if lockOnTimer >= lockOnTime:
+						$Input.Target = closestTarget.name
+				else:
+					lockOnTimer = 0
+		
+		if hitpoints <= 0:
+			dead = true
+			$Overlays/EnemyMarker.hide()
+			if $CamRoot/Camera.current:
+				$Respawn.start()
+				$Hud/Respawn.show()
+			if multiplayer.is_server():
+				$Respawn.start()
+		
+		if(input.firering):
+			if not multiplayer.is_server():
+				return
+			shoot()
+		
+		if(input.missile):
+			if not multiplayer.is_server():
+				return
+			missile()
+	else:
+		$Hud/Respawn.text = str($Respawn.time_left)
 
 func shoot():
 	var b = Bullet.instantiate()
@@ -146,3 +152,11 @@ func missile():
 
 func hit(dmg):
 	hitpoints -= dmg
+
+
+func _on_respawn_timeout():
+	$Hud/Respawn.hide()
+	if multiplayer.is_server():
+		var pos := Vector2.from_angle(randf() * 2 * PI)
+		position = Vector3(pos.x * 3000 * randf(), 0, pos.y * 3000 * randf())
+		hitpoints = 100
