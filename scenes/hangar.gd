@@ -217,6 +217,7 @@ func _on_delete_ship_pressed():
 		return
 	ship_config.erase_section($BottomPanel/ShipName.text)
 	_on_next_pressed()
+	ship_config.save("user://ShipConfig.cfg")
 
 func _on_new_ship_dialogue_create_new_ship(name, data):
 	# ship already exists
@@ -231,6 +232,7 @@ func _on_new_ship_dialogue_create_new_ship(name, data):
 	$BottomPanel/NewShip.show()
 	load_ship(name)
 	create_success_toast("You're now the proud owner of " + name + "!")
+	ship_config.save("user://ShipConfig.cfg")
 
 func _on_new_ship_dialogue_cancel():
 	$NewShipDialogue.hide()

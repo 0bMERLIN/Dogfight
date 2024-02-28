@@ -29,8 +29,11 @@ theme_override_constants/separation = 60
 [node name="CamPivot" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="CamPivot"]
-transform = Transform3D(-1, 1.48351e-08, -1.4644e-07, -2.13123e-08, 0.969829, 0.243784, 1.45639e-07, 0.243784, -0.969829, 0, 2.06177, -7.16436)
+transform = Transform3D(-1, 1.48352e-08, -1.46441e-07, -2.13123e-08, 0.96983, 0.243784, 1.45639e-07, 0.243784, -0.96983, 0, 18.1454, -43.2936)
 current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CamPivot/Camera3D"]
+transform = Transform3D(0.993572, 0.027578, -0.109793, 0, 0.969872, 0.243615, 0.113203, -0.242049, 0.963637, 0, 0, 0)
 
 [node name="Ship" type="Node3D" parent="."]
 

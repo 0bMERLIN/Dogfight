@@ -7,6 +7,7 @@ extends MultiplayerSynchronizer
 @export var firering := false
 @export var missile := false
 @export var Target : String
+var input_dir = Vector3()
 
 @onready var cursor = get_parent().get_node("Hud/Hud")
 

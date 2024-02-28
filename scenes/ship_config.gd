@@ -9,9 +9,9 @@ var editing = false :
 	set(v):
 		map_attachments(func(a):
 			if v:
-				a.show()
+				a.editing = true
 			else:
-				a.hide())
+				a.editing = false)
 		editing = v
 
 func del_attachment(attachment_point_name):

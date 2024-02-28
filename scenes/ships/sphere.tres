@@ -7,5 +7,5 @@ albedo_color = Color(1, 1, 1, 0.8)
 
 [resource]
 material = SubResource("StandardMaterial3D_i783g")
-radius = 0.25
-height = 0.5
+radius = 1.0
+height = 2.0

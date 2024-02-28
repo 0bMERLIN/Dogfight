@@ -48,6 +48,7 @@ func _ready():
 	
 	var s = load(Ship_config.get_value(Ship_config.get_value("", "current_ship_name"), "ship_scene")).instantiate()
 	s.ship_config = Ship_config
+	s.editing = false
 	add_child(s)
 	rotation = Vector3(0, PI, 0)
 	$Overlays/EnemyMarker.hide()

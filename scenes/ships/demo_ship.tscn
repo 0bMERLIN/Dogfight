@@ -1,24 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://dswnyxd6st30e"]
 
-[ext_resource type="PackedScene" uid="uid://burb5halkr0u" path="res://assets/ships/low_poly_space_ship.glb" id="1_lpllq"]
 [ext_resource type="Script" path="res://scenes/ship_config.gd" id="1_s0si0"]
+[ext_resource type="PackedScene" uid="uid://dfjnyp7vrnh8c" path="res://assets/ships/Middle_Space_Ship.blend" id="3_w3c3k"]
 [ext_resource type="PackedScene" uid="uid://csyyn3a8ft0dw" path="res://scenes/AttachmentPoint.tscn" id="3_wn0ng"]
 
 [node name="DemoShip" type="Node3D"]
 script = ExtResource("1_s0si0")
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_lpllq")]
-
 [node name="AttachmentPoints" type="Node3D" parent="."]
 
-[node name="WingAttachmentPoint" type="Node3D" parent="AttachmentPoints"]
+[node name="FrontAttachmentPoint" type="Node3D" parent="AttachmentPoints"]
 
-[node name="Bingus" parent="AttachmentPoints/WingAttachmentPoint" instance=ExtResource("3_wn0ng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.79595, 0.436903, -0.297773)
+[node name="Bingus" parent="AttachmentPoints/FrontAttachmentPoint" instance=ExtResource("3_wn0ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.73334, 15.0442)
 
-[node name="Cubus" parent="AttachmentPoints/WingAttachmentPoint" instance=ExtResource("3_wn0ng")]
-
-[node name="TailAttachmentPoint" type="Node3D" parent="AttachmentPoints"]
-
-[node name="Bingus" parent="AttachmentPoints/TailAttachmentPoint" instance=ExtResource("3_wn0ng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.66674, 0)
+[node name="Middle_Space_Ship" parent="." instance=ExtResource("3_w3c3k")]
