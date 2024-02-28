@@ -46,8 +46,7 @@ func _ready():
 		hp_scene.player = self
 		$Hud/HpViewport.add_child(hp_scene)
 	else:
-		$Hud/SubViewportContainer.hide()
-	$CamRoot/Camera.input = input
+		$Hud.hide()
 	
 	var s = load(Ship_config.get_value(Ship_config.get_value("", "current_ship_name"), "ship_scene")).instantiate()
 	s.ship_config = Ship_config
