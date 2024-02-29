@@ -3,6 +3,7 @@ extends Area3D
 @export var target : Node
 @export var speed : float = 140.0
 @export var maxTurnSpeed : float = 210.0  # Maximum turning speed in degrees per second
+@export var exploded = false
 
 @export var fired_by : Node
 
@@ -12,16 +13,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if exploded:
+		explode()
 	if target && $Animation.is_stopped():
 		# Calculate the direction vector towards the target
 		var dist = (target.global_transform.origin - global_transform.origin)
 		var dir = dist.normalized()
 		
 		if dist.length() < 10:
-			$Node3D.emit()
-			$Animation.start()
+			explode()
+			exploded = true
 			speed = 0
-			$Sketchfab_Scene.hide()
 			if multiplayer.is_server():
 				if target.hit(30):
 					fired_by.kills += 1
@@ -40,6 +42,10 @@ func _process(delta):
 
 	global_transform.origin += global_transform.basis.z.normalized() * speed * delta
 
+func explode():
+	$Node3D.emit()
+	$Animation.start()
+	$Sketchfab_Scene.hide()
 
 func _on_timer_timeout():
 	if multiplayer.is_server():
