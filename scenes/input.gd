@@ -44,4 +44,6 @@ func _process(delta):
 	if Input.is_action_pressed("ui_focus_next") && $Missiletimer.is_stopped():
 		missile = true
 		$Missiletimer.start()
+		if !multiplayer.is_server():
+			print(missile)
 

@@ -7,6 +7,8 @@ extends CharacterBody3D
 @export var radar : PackedScene
 @export var hp_scene : PackedScene
 
+@export var kills = 0
+
 var rot_vel = Vector3()
 
 const lockOnRange = 30
@@ -89,6 +91,7 @@ func _physics_process(delta):
 		$Hud/TargetRect.hide()
 		$Hud/PreTargetRect.hide()
 		if $CamRoot/Camera.current:
+			$Hud/Kills.text = "Kills: " + str(kills)
 			var closestTarget = null
 			var closestTargetDist = INF
 			for target in get_parent().get_children():
@@ -137,24 +140,29 @@ func _physics_process(delta):
 			$Input.missile = false
 			if not multiplayer.is_server():
 				return
+			
 			missile()
 	else:
-		$Hud/Respawn.text = str($Respawn.time_left)
+		$Hud/Respawn.text = str(round($Respawn.time_left))
 
 func shoot():
 	var b = Bullet.instantiate()
+	b.fired_by = self
 	BulletsCollection.add_child(b, true)
 	b.transform = $BulletMuzzle.global_transform
 
 func missile():
 	var m = Missile.instantiate()
+	m.fired_by = self
 	m.target = PlayerCollection.get_node($Input.Target)
 	BulletsCollection.add_child(m, true)
 	m.transform = $BulletMuzzle.global_transform
 
 func hit(dmg):
-	print(dmg)
 	hitpoints -= dmg
+	if hitpoints<=0 && !dead:
+		return true
+	return false
 
 
 func _on_respawn_timeout():

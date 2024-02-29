@@ -4,6 +4,8 @@ extends Area3D
 @export var speed : float = 140.0
 @export var maxTurnSpeed : float = 210.0  # Maximum turning speed in degrees per second
 
+@export var fired_by : Node
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -21,7 +23,8 @@ func _process(delta):
 			speed = 0
 			$Sketchfab_Scene.hide()
 			if multiplayer.is_server():
-				target.hit(30)
+				if target.hit(30):
+					fired_by.kills += 1
 
 		# Calculate the angle to rotate
 		var angle = global_transform.basis.z.angle_to(dir)
