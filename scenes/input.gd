@@ -42,8 +42,13 @@ func _process(delta):
 	
 	firering = Input.is_action_pressed("ui_accept")
 	if Input.is_action_pressed("ui_focus_next") && $Missiletimer.is_stopped():
-		missile = true
 		$Missiletimer.start()
-		if !multiplayer.is_server():
-			print(missile)
+		if multiplayer.is_server():
+			get_parent().missile()
+		else:
+			fire_missile.rpc()
 
+@rpc
+func fire_missile():
+	if multiplayer.is_server():
+		get_parent().missile()

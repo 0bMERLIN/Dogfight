@@ -135,13 +135,6 @@ func _physics_process(delta):
 			if not multiplayer.is_server():
 				return
 			shoot()
-		
-		if(input.missile):
-			$Input.missile = false
-			if not multiplayer.is_server():
-				return
-			
-			missile()
 	else:
 		$Hud/Respawn.text = str(round($Respawn.time_left))
 
